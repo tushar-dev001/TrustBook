@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -23,7 +24,10 @@ const Navbar = () => {
   <div className="flex-1">
     <button className="btn btn-ghost normal-case text-xl">TrustBook</button>
   </div>
-  <div className="flex-none p-2 pr-5">
+  <div className="flex-none p-2 pr-5 gap-4">
+    <button className='btn btn-secondary text-white'><a href="/login">Login</a></button>
+    <button className='btn btn-secondary text-white'><a href="/">Register</a></button>
+
   <label className="swap swap-rotate">
   
   {/* this hidden checkbox controls the state */}
