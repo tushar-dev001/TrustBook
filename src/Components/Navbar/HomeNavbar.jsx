@@ -60,7 +60,7 @@ const HomeNavbar = () => {
       </label>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
         <li>
-          <Link to='#' className="justify-between">
+          <Link to='/profile' className="justify-between">
             Profile
             <span className="badge">New</span>
           </Link>

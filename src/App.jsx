@@ -10,6 +10,7 @@ import Friends from "./Components/Friends/Friends";
 import Notification from "./Components/Notification/Notification";
 import Groups from "./Groups/Groups";
 import Message from "./Message/Message";
+import Profile from "./Components/Profile/Profile";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         path: "/message",
         element: <Message />,
       },
+      {
+        path: '/profile',
+        element: <Profile/>
+      }
     ]
   }
 ]);
