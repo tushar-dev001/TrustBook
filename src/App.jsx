@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./Pages/Login/Login";
 import Home from "./Components/Home/Home";
 import { ToastContainer } from "react-toastify";
+import RootLayOut from "./RootLayOut/RootLayOut";
 
 const router = createBrowserRouter([
   {
@@ -16,9 +17,15 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/home",
-    element: <Home />,
-  },
+    path: '/',
+    element: <RootLayOut/>,
+    children: [
+      {
+        path: "/home",
+        element: <Home />,
+      },
+    ]
+  }
 ]);
 
 const App = () => {
@@ -38,7 +45,6 @@ const App = () => {
       />
       {/* Same as */}
       <ToastContainer />
-      <Navbar />
       <RouterProvider router={router} />
     </>
   );

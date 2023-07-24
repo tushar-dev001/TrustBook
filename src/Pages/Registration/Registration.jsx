@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -9,6 +9,7 @@ import app from "../../firebase/firebase.config";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Alert } from "@mui/material";
+import Navbar from "../../Components/Navbar/Navbar";
 
 const auth = getAuth(app);
 
@@ -61,97 +62,101 @@ const Registration = () => {
       .catch((error) => {
         console.log(error);
         const errorCode = error.code;
-        setUserError(errorCode)
-        if(errorCode == 'auth/email-already-in-use'){
-          setValues({
-            password: ""
-          })
-        }
+        setUserError(errorCode);
+        // if (errorCode == "auth/email-already-in-use") {
+        //   setValues({
+        //     password: "",
+        //   });
+        // }
       });
   };
 
   return (
-    <div className="hero lg:min-h-screen lg:bg-base-200">
-      <div className="hero-content flex-col">
-        <div className="text-center lg:text-left mb-8 md:mb-0">
-          <h1 className="text-5xl font-bold">Please Register now!</h1>
-        </div>
-        <div className="card flex-shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
-          <form onSubmit={handleSubmit} className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Full Name</span>
-              </label>
-              <input
-                type="text"
-                name="fullName"
-                placeholder="Full Name"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
+    <>
+      <Navbar/>
+      {/* Login page design start */}
+      <div className="hero lg:min-h-screen lg:bg-base-200">
+        <div className="hero-content flex-col">
+          <div className="text-center lg:text-left mb-8 md:mb-0">
+            <h1 className="text-5xl font-bold">Please Register now!</h1>
+          </div>
+          <div className="card flex-shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
+            <form onSubmit={handleSubmit} className="card-body">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Full Name</span>
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Full Name"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
 
-              {userError === 'auth/email-already-in-use'&& 
-                <Alert severity="error">Email Already Use</Alert>
+                {userError === "auth/email-already-in-use" && (
+                  <Alert severity="error">Email Already Use</Alert>
+                )}
 
-              }
-
-              <input
-                type="text"
-                name="email"
-                placeholder="email"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="text"
-                name="password"
-                placeholder="password"
-                className="input input-bordered"
-                required
-              />
-              {error && (
-                <div className="alert alert-error mt-5">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="stroke-current shrink-0 h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <span>{error}</span>
-                </div>
-              )}
-              <label className="label">
-                <Link to="/login" className="label-text-alt link link-hover">
-                  Already have an account?
-                </Link>
-              </label>
-            </div>
-            <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary">
-                Register
-              </button>
-            </div>
-          </form>
+                <input
+                  type="text"
+                  name="email"
+                  placeholder="email"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Password</span>
+                </label>
+                <input
+                  type="text"
+                  name="password"
+                  placeholder="password"
+                  className="input input-bordered"
+                  required
+                />
+                {error && (
+                  <div className="alert alert-error mt-5">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="stroke-current shrink-0 h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    <span>{error}</span>
+                  </div>
+                )}
+                <label className="label">
+                  <Link to="/login" className="label-text-alt link link-hover">
+                    Already have an account?
+                  </Link>
+                </label>
+              </div>
+              <div className="form-control mt-6">
+                <button type="submit" className="btn btn-primary">
+                  Register
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+      {/* Login page design end */}
+    </>
   );
 };
 
