@@ -14,7 +14,7 @@ const LeftSiteBar = () => {
       </NavLink>
 
       <NavLink to="/friends">
-        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300">
+        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
           <div>
             <label
               tabIndex={0}
@@ -24,13 +24,13 @@ const LeftSiteBar = () => {
             </label>
           </div>
           <div>
-            <h3 className="text-xl font-pop font-semibold">Friends</h3>
+            <h3 className="lg:text-xl font-pop font-semibold ">Friends</h3>
           </div>
         </div>
       </NavLink>
 
       <NavLink to="/mygroups">
-        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300">
+        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
           <div>
             <label
               tabIndex={0}
@@ -40,13 +40,13 @@ const LeftSiteBar = () => {
             </label>
           </div>
           <div>
-            <h3 className="text-xl font-pop font-semibold">My groups</h3>
+            <h3 className="lg:text-xl font-pop font-semibold">My groups</h3>
           </div>
         </div>
       </NavLink>
 
       <NavLink to="/block">
-        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300">
+        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0] hover:text-[#D9DBE0]">
           <div>
             <label
               tabIndex={0}
@@ -56,13 +56,13 @@ const LeftSiteBar = () => {
             </label>
           </div>
           <div>
-            <h3 className="text-xl font-pop font-semibold">Block User</h3>
+            <h3 className="lg:text-xl font-pop font-semibold">Block User</h3>
           </div>
         </div>
       </NavLink>
 
       <NavLink to="/watch">
-        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300">
+        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
           <div>
             <label
               tabIndex={0}
@@ -72,13 +72,13 @@ const LeftSiteBar = () => {
             </label>
           </div>
           <div>
-            <h3 className="text-xl font-pop font-semibold">Watch</h3>
+            <h3 className="lg:text-xl font-pop font-semibold">Watch</h3>
           </div>
         </div>
       </NavLink>
 
       <NavLink to="/settings">
-        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300">
+        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
           <div>
             <label
               tabIndex={0}
@@ -88,7 +88,7 @@ const LeftSiteBar = () => {
             </label>
           </div>
           <div>
-            <h3 className="text-xl font-pop font-semibold">Settings</h3>
+            <h3 className="lg:text-xl font-pop font-semibold">Settings</h3>
           </div>
         </div>
       </NavLink>
