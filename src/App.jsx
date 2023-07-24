@@ -16,6 +16,7 @@ import BlockUser from "./Components/BlockUser/BlockUser";
 import Settings from "./Components/Settings/Settings";
 import watch from "./Components/Watch/Watch";
 import Watch from "./Components/Watch/Watch";
+import FriendRequest from "./Components/FriendRequest/FriendRequest";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/friends",
         element: <Friends />,
+      },
+      {
+        path: "/friendrequest",
+        element: <FriendRequest />,
       },
       {
         path: "/notification",
