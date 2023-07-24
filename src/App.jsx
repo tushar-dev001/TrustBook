@@ -6,6 +6,10 @@ import Login from "./Pages/Login/Login";
 import Home from "./Components/Home/Home";
 import { ToastContainer } from "react-toastify";
 import RootLayOut from "./RootLayOut/RootLayOut";
+import Friends from "./Components/Friends/Friends";
+import Notification from "./Components/Notification/Notification";
+import Groups from "./Groups/Groups";
+import Message from "./Message/Message";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +27,22 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/friends",
+        element: <Friends />,
+      },
+      {
+        path: "/notification",
+        element: <Notification />,
+      },
+      {
+        path: "/groups",
+        element: <Groups />,
+      },
+      {
+        path: "/message",
+        element: <Message />,
       },
     ]
   }

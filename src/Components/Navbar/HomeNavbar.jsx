@@ -34,10 +34,10 @@ const HomeNavbar = () => {
   <div className="navbar-center bg-primary">
     <ul className="menu menu-horizontal px-1 text-white  lg:gap-12">
       <li className='text-3xl lg:text-4xl'><Link to='/home'><AiFillHome /></Link></li>
-      <li className='text-3xl lg:text-4xl'><Link to='/home'><FaUserFriends /></Link></li>
-      <li className='text-3xl lg:text-4xl'><Link to='/home'><IoIosNotifications /></Link></li>
-      <li className='text-3xl lg:text-4xl'><Link to='/home'><MdGroups2 /></Link></li>
-      <li className='text-3xl lg:text-4xl mr-2'><Link to='/home'><BsMessenger /></Link></li>
+      <li className='text-3xl lg:text-4xl'><Link to='/friends'><FaUserFriends /></Link></li>
+      <li className='text-3xl lg:text-4xl'><Link to='/notification'><IoIosNotifications /></Link></li>
+      <li className='text-3xl lg:text-4xl'><Link to='/groups'><MdGroups2 /></Link></li>
+      <li className='text-3xl lg:text-4xl mr-2'><Link to='/message'><BsMessenger /></Link></li>
       {/* <li tabIndex={0}>
         <details>
           <summary>Parent</summary>
