@@ -11,8 +11,8 @@ import Logout from '../Logout/Logout'
 const HomeNavbar = () => {
     
   return (
-    <div className="sm:navbar bg-primary flex items-center">
-  <div className="navbar-start">
+    <div className="sm:navbar bg-primary flex md:flex-row flex-col items-center">
+  <div className="md:navbar-start">
     {/* <div className="dropdown">
       <label tabIndex={0} className="btn btn-ghost lg:hidden">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
@@ -31,8 +31,9 @@ const HomeNavbar = () => {
     </div> */}
     <Link className="btn btn-ghost normal-case text-xl text-white" to='/home'>TrustBook</Link>
   </div>
-  <div className="navbar-center bg-primary">
-    <ul className="menu menu-horizontal px-1 text-white  lg:gap-12">
+
+  <div className="navbar-center bg-primary pt-2">
+    <ul className="menu menu-horizontal px-1 text-white lg:gap-12">
       <li className='text-3xl lg:text-4xl'><Link to='/home'><AiFillHome /></Link></li>
       <li className='text-3xl lg:text-4xl'><Link to='/friends'><FaUserFriends /></Link></li>
       <li className='text-3xl lg:text-4xl'><Link to='/notification'><IoIosNotifications /></Link></li>
@@ -50,7 +51,8 @@ const HomeNavbar = () => {
       {/* <li><a>Item 3</a></li> */}
     </ul>
   </div>
-  <div className="bg-primary p-2.5 gap-2 navbar-end md:gap-4 flex align-center">
+
+  <div className="bg-primary p-2.5 gap-2 md:navbar-end md:gap-4 flex md:align-center">
   <div className="flex-none gap-2">
     <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -58,14 +60,14 @@ const HomeNavbar = () => {
           <img src="/public/assets/tushar.jpg" />
         </div>
       </label>
-      <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+      <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-200 rounded-box w-44 lg:w-96">
         <li>
-          <Link to='/profile' className="justify-between">
+          <Link to='/profile' className="justify-between lg:text-xl">
             Profile
-            <span className="badge">New</span>
+            <span className="badge lg:text-xl">New</span>
           </Link>
         </li>
-        <li><Link to='#'>Settings</Link></li>
+        <li><Link to='#' className='lg:text-xl'>Settings</Link></li>
         <li><Link><Logout/></Link></li>
       </ul>
     </div>

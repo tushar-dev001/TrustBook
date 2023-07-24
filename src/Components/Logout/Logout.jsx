@@ -40,7 +40,7 @@ const Logout = () => {
       };
 
   return (
-    <div onClick={handleLogout}>Logout</div>
+    <div className="lg:text-xl" onClick={handleLogout}>Logout</div>
   )
 }
 
