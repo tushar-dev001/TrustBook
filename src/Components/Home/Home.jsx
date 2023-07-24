@@ -1,10 +1,9 @@
 
 
 const Home = () => {
-
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="grid grid-cols-12 gap-5 mx-auto mt-5">
+      <div className=" col-span-6 ">02hhhh</div>
     </div>
   );
 };

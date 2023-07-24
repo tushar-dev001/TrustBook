@@ -67,7 +67,7 @@ const HomeNavbar = () => {
             <span className="badge lg:text-xl">New</span>
           </Link>
         </li>
-        <li><Link to='#' className='lg:text-xl'>Settings</Link></li>
+        <li><Link to='/settings' className='lg:text-xl'>Settings</Link></li>
         <li><Link><Logout/></Link></li>
       </ul>
     </div>

@@ -113,13 +113,13 @@ const Login = () => {
       <Navbar/>
       {/* navbar design end */}
       {/* login design start */}
-      <div className="hero min-h-screen bg-base-200">
+      <div className="hero lg:min-h-screen bg-base-200">
         <div className="hero-content flex-col">
           <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Please Login now!</h1>
+            <h1 className="text-5xl font-bold font-pop">Please Login now!</h1>
 
             <img
-              className="w-[150px] mt-5 cursor-pointer"
+              className="w-[150px] mt-5 cursor-pointer mx-auto"
               onClick={handleGoogle}
               src="assets/google.png"
               alt=""
@@ -129,7 +129,7 @@ const Login = () => {
             <form onSubmit={handleSubmit} className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text font-pop">Email</span>
                 </label>
 
                 <input
@@ -142,12 +142,12 @@ const Login = () => {
                   required
                 />
                 {error === "auth/user-not-found" && isInputFocused && (
-                  <Alert severity="error">User not found</Alert>
+                  <Alert severity="error" className="font-pop">User not found</Alert>
                 )}
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Password</span>
+                  <span className="label-text font-pop">Password</span>
                 </label>
 
                 <input
@@ -160,13 +160,13 @@ const Login = () => {
                   required
                 />
                 {error === "auth/wrong-password" && isInputFocused && (
-                  <Alert severity="error">Wrong Password</Alert>
+                  <Alert severity="error" className="font-pop">Wrong Password</Alert>
                 )}
                 <label className="label flex-col">
                   <Link
                     href="#"
                     onClick={() => window.my_modal_2.showModal()}
-                    className="label-text-alt link link-hover"
+                    className="label-text-alt link link-hover font-pop"
                   >
                     Forgot password?
                   </Link>
@@ -179,8 +179,8 @@ const Login = () => {
                         method="dialog"
                         className="modal-box"
                       >
-                        <h3 className="font-bold text-lg">Find Your Account</h3>
-                        <p className="py-4">
+                        <h3 className="font-bold font-pop text-lg">Find Your Account</h3>
+                        <p className="py-4 font-pop">
                           Please enter your email address or mobile number to
                           search for your account.
                         </p>
@@ -194,19 +194,19 @@ const Login = () => {
                         <button className="btn btn-primary mt-4">Submit</button>
                       </form>
                       <form method="dialog" className="modal-backdrop">
-                        <button>close</button>
+                        <button className="font-pop">close</button>
                       </form>
                     </dialog>
                   </div>
                   {/* forgot modal end */}
 
-                  <Link to="/" className="label-text-alt link link-hover">
+                  <Link to="/" className="label-text-alt link link-hover font-pop">
                     Don't have an account?
                   </Link>
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary font-pop">
                   Login to Continue
                 </button>
               </div>

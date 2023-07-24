@@ -11,6 +11,11 @@ import Notification from "./Components/Notification/Notification";
 import Groups from "./Groups/Groups";
 import Message from "./Message/Message";
 import Profile from "./Components/Profile/Profile";
+import MyGroups from "./Components/MyGroups/MyGroups";
+import BlockUser from "./Components/BlockUser/BlockUser";
+import Settings from "./Components/Settings/Settings";
+import watch from "./Components/Watch/Watch";
+import Watch from "./Components/Watch/Watch";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +53,23 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile/>
-      }
+      },
+      {
+        path: '/mygroups',
+        element: <MyGroups/>
+      },
+      {
+        path: '/block',
+        element: <BlockUser/>
+      },
+      {
+        path: '/watch',
+        element: <Watch/>
+      },
+      {
+        path: '/settings',
+        element: <Settings/>
+      },
     ]
   }
 ]);

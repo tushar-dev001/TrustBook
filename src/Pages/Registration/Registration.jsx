@@ -78,13 +78,13 @@ const Registration = () => {
       <div className="hero lg:min-h-screen lg:bg-base-200">
         <div className="hero-content flex-col">
           <div className="text-center lg:text-left mb-8 md:mb-0">
-            <h1 className="text-5xl font-bold">Please Register now!</h1>
+            <h1 className="text-5xl font-pop font-bold">Please Register now!</h1>
           </div>
           <div className="card flex-shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
             <form onSubmit={handleSubmit} className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Full Name</span>
+                  <span className="label-text font-pop">Full Name</span>
                 </label>
                 <input
                   type="text"
@@ -96,11 +96,11 @@ const Registration = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text font-pop">Email</span>
                 </label>
 
                 {userError === "auth/email-already-in-use" && (
-                  <Alert severity="error">Email Already Use</Alert>
+                  <Alert severity="error" className="font-pop">Email Already Use</Alert>
                 )}
 
                 <input
@@ -113,7 +113,7 @@ const Registration = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Password</span>
+                  <span className="label-text font-pop">Password</span>
                 </label>
                 <input
                   type="text"
@@ -141,13 +141,13 @@ const Registration = () => {
                   </div>
                 )}
                 <label className="label">
-                  <Link to="/login" className="label-text-alt link link-hover">
+                  <Link to="/login" className="label-text-alt font-pop link link-hover">
                     Already have an account?
                   </Link>
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary font-pop">
                   Register
                 </button>
               </div>
