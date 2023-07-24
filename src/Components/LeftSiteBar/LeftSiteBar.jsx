@@ -8,7 +8,9 @@ const LeftSiteBar = () => {
   return (
     <div className="col-span-3">
       <NavLink to="/profile">
-        <User />
+        <div className="ml-5">
+          <User />
+        </div>
       </NavLink>
 
       <NavLink to="/friends">
