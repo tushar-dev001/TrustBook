@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import UserWithBtn from '../Shared/UserWithBtn/UserWithBtn'
 
-const FriendRequest = () => {
+const Suggestion = () => {
   return (
     <div>
       <form>
@@ -14,12 +15,11 @@ const FriendRequest = () => {
         </button>
       </form>
       
-      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
-      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
-      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
-      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
-    </div>
+    <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
+    <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
+    <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
+  </div>
   )
 }
 
-export default FriendRequest
+export default Suggestion

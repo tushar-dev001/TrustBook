@@ -1,7 +1,7 @@
 import React from 'react'
-import UserWithBtn from '../Shared/UserWithBtn/UserWithBtn'
+import UserWithBtn from '../../Components/Shared/UserWithBtn/UserWithBtn'
 
-const FriendRequest = () => {
+const GroupList = () => {
   return (
     <div>
       <form>
@@ -22,4 +22,4 @@ const FriendRequest = () => {
   )
 }
 
-export default FriendRequest
+export default GroupList

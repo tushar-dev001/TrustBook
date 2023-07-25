@@ -35,7 +35,7 @@ const RightSideBar = () => {
       </div>
 
       <div className="mt-2 lg:ml-16 mb-4 border-b border-b-slate-300 pb-4">
-        <UserWithBtn />
+        <UserWithBtn btnOne="Confirm" btnTwo="Delete"/>
       </div>
       {/* Your Friend request part end */}
 

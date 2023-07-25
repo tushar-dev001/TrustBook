@@ -13,7 +13,7 @@ const LeftSiteBar = () => {
         </div>
       </NavLink>
 
-      <NavLink to="/friends">
+      <NavLink to="friendspart/friends">
         <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
           <div>
             <label
@@ -29,7 +29,7 @@ const LeftSiteBar = () => {
         </div>
       </NavLink>
 
-      <NavLink to="/mygroups">
+      <NavLink to="groups/mygroups">
         <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
           <div>
             <label
@@ -61,7 +61,7 @@ const LeftSiteBar = () => {
         </div>
       </NavLink>
 
-      <NavLink to="/watch">
+      <NavLink to="https://www.youtube.com/" target="_blank">
         <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
           <div>
             <label

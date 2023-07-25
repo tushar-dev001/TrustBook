@@ -1,13 +1,25 @@
-import React from 'react'
+import UserWithBtn from "../Shared/UserWithBtn/UserWithBtn";
 
 const Friends = () => {
   return (
-    <div className="grid grid-cols-12 gap-5 mx-auto">
-      <div className=" col-span-3 bg-red-400">01</div>
-      <div className=" col-span-6 bg-red-400">02</div>
-      <div className=" col-span-3 bg-red-400">03</div>
+    <div>
+      <form>
+        <input className="p-2 rounded-3xl" type="search" name="" id="" />
+        <button
+          className="px-4 py-2 ml-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100"
+          type="submit"
+        >
+          Search
+        </button>
+      </form>
+      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
+      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
+      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
+      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
+      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
+      <UserWithBtn btnOne="Unfriend" btnTwo="Block" />
     </div>
-  )
-}
+  );
+};
 
-export default Friends
+export default Friends;
