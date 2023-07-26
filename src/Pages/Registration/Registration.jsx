@@ -3,6 +3,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  updateProfile,
 } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import app from "../../firebase/firebase.config";
@@ -47,17 +48,28 @@ const Registration = () => {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((user) => {
+        updateProfile(auth.currentUser, {
+          displayName: "Jane Q. User",
+          photoURL: "https://i.ibb.co/ssPGgsM/avater.png",
+        })
+          .then(() => {
+            //sent verification email
+            sendEmailVerification(auth.currentUser).then((user) => {
+              console.log(user);
+              console.log("sent email");
+
+              toast("Please check your email and verify your mail");
+
+              setTimeout(() => {
+                navigate("/login");
+              }, 3000);
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
         console.log(user);
-        sendEmailVerification(auth.currentUser).then((user) => {
-          console.log(user);
-          console.log("sent email");
-
-          toast("Please check your email and verify your mail");
-
-          setTimeout(() => {
-            navigate("/login");
-          }, 3000);
-        });
       })
       .catch((error) => {
         console.log(error);
@@ -73,12 +85,14 @@ const Registration = () => {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       {/* Login page design start */}
       <div className="hero lg:min-h-screen lg:bg-base-200">
         <div className="hero-content flex-col">
           <div className="text-center lg:text-left mb-8 md:mb-0">
-            <h1 className="text-5xl font-pop font-bold">Please Register now!</h1>
+            <h1 className="text-5xl font-pop font-bold">
+              Please Register now!
+            </h1>
           </div>
           <div className="card flex-shrink-0 w-full max-w-2xl shadow-2xl bg-base-100">
             <form onSubmit={handleSubmit} className="card-body">
@@ -100,7 +114,9 @@ const Registration = () => {
                 </label>
 
                 {userError === "auth/email-already-in-use" && (
-                  <Alert severity="error" className="font-pop">Email Already Use</Alert>
+                  <Alert severity="error" className="font-pop">
+                    Email Already Use
+                  </Alert>
                 )}
 
                 <input
@@ -141,7 +157,10 @@ const Registration = () => {
                   </div>
                 )}
                 <label className="label">
-                  <Link to="/login" className="label-text-alt font-pop link link-hover">
+                  <Link
+                    to="/login"
+                    className="label-text-alt font-pop link link-hover"
+                  >
                     Already have an account?
                   </Link>
                 </label>
