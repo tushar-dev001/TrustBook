@@ -15,30 +15,33 @@ const Profile = () => {
   return (
     <>
       {/* Navbar */}
+      <div className="hidden md:block">
       <HomeNavbar />
+
+      </div>
 
       {/* Profile photo and name design start */}
       <div className="shadow-xl bg-[#242526]">
-        <div>
+        <div className="w-full">
           <img
-            className="w-[940px] h-[350px] mx-auto object-cover"
+            className="md:w-[940px] md:h-[350px] h-24 w-full mx-auto object-cover"
             src="/public/assets/cover.jpg"
             alt=""
           />
         </div>
-        <div className="max-w-[880px] mx-auto flex justify-between items-center border-b pb-4">
-          <div className="mt-12 flex items-center gap-10">
+        <div className="max-w-[880px] mx-auto md:flex justify-between items-center border-b p-2 md:p-0 pb-4">
+          <div className="-mt-8 md:mt-12 md:flex items-center gap-10">
             <div className="">
               <img
-                className="w-40 h-40 rounded-full relative object-cover transition-transform transform hover:scale-105 duration-300 ease-in-out hover:opacity-100 cursor-pointer"
+                className="w-20 h-20 md:w-40 md:h-40 rounded-full relative object-cover transition-transform transform hover:scale-105 duration-300 ease-in-out hover:opacity-100 cursor-pointer"
                 src="/public/assets/tushar.jpg"
                 alt=""
               />
-              <BsFillCameraFill className="absolute mt-[-60px] ml-[125px] text-4xl" />
+              <BsFillCameraFill className="absolute mt-[-60px] ml-[125px] text-4xl hidden md:block" />
             </div>
             <div className="font-pop">
               <h2 className="font-extrabold text-4xl">Tushar Imran</h2>
-              <p className="text-sm">100B followers . 0 following</p>
+              <p className="text-sm mb-3 md:mb-0">100B followers . 0 following</p>
             </div>
           </div>
 
@@ -49,7 +52,7 @@ const Profile = () => {
         </div>
 
         <div className="max-w-[880px] mx-auto ">
-          <ul className="flex gap-7  py-6">
+          <ul className="flex gap-3 md:gap-7  py-6">
             <Link to="#post">
               {" "}
               <li>Post</li>
@@ -72,7 +75,7 @@ const Profile = () => {
             </Link>
             <Link to="#">
               {" "}
-              <li>Groups</li>
+              <li className="hidden md:block">Groups</li>
             </Link>
           </ul>
         </div>
@@ -80,8 +83,8 @@ const Profile = () => {
       {/* Profile photo and name design start */}
 
       {/* Profile home section design start */}
-      <div className="flex justify-center gap-5 mt-6 mb-36 ">
-        <div className="w-[360px] bg-[#242526] py-7 px-5">
+      <div className="md:flex justify-center gap-5 mt-6 mb-36 ">
+        <div className="md:w-[360px] bg-[#242526] py-7 px-5">
           <h3>Intro</h3>
           <p>
             React Developer | MERN full Stack Developer (jr.) | Still learning
@@ -158,12 +161,12 @@ const Profile = () => {
         </div>
 
         <div className="w-[500px] justify-start">
-          <div>
+          <div className="mt-5 md:mt-0">
             <ProfilePostInputBar />
           </div>
 
           {/* Profile Post design start */}
-          <div className=" col-span-6 bg-[#242526] mt-10">
+          <div className=" col-span-6 bg-[#242526] mt-10 p-2 md:p-0">
             <div className="card w-full  mx-auto shadow-2xl">
               <div className="">
                 <div className="flex items-center justify-between">
