@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   updateProfile,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import app from "../../firebase/firebase.config";
@@ -11,6 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Alert } from "@mui/material";
 import Navbar from "../../Components/Navbar/Navbar";
+import { getDatabase, push, ref, set } from "firebase/database";
 
 const auth = getAuth(app);
 
@@ -19,11 +21,10 @@ const Registration = () => {
   const [userError, setUserError] = useState();
   const navigate = useNavigate();
   const notify = toast();
+  const db = getDatabase();
 
   const handleSubmit = (event) => {
-    console.log(event);
-
-    console.log(event);
+    // console.log(event);
     event.preventDefault();
     const form = event.target;
     const name = form.fullName.value;
@@ -49,27 +50,30 @@ const Registration = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((user) => {
         updateProfile(auth.currentUser, {
-          displayName: "Jane Q. User",
+          displayName: name,
           photoURL: "https://i.ibb.co/ssPGgsM/avater.png",
         })
           .then(() => {
             //sent verification email
-            sendEmailVerification(auth.currentUser).then((user) => {
-              console.log(user);
+            sendEmailVerification(auth.currentUser).then(() => {
               console.log("sent email");
+              console.log(user);
 
-              toast("Please check your email and verify your mail");
-
-              setTimeout(() => {
-                navigate("/login");
-              }, 3000);
+              set(ref(db, "users/" + user.user.uid), {
+                username: name,
+                email: email,
+                profile_picture: user.user.photoURL,
+              }).then(() => {
+                toast("Please check your email and verify your mail");
+                setTimeout(() => {
+                  navigate("/login");
+                }, 3000);
+              });
             });
           })
           .catch((error) => {
             console.log(error);
           });
-
-        console.log(user);
       })
       .catch((error) => {
         console.log(error);
@@ -82,6 +86,21 @@ const Registration = () => {
         // }
       });
   };
+
+  // user jodi login thake taile logout kora chara ae page a aste parbena
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     // console.log(user);
+  //     if(user){
+  //       navigate('/home')
+  //     }else{
+  //       console.log("user nai");
+  //     }
+  //   } else {
+  //     // User is signed out
+  //     // ...
+  //   }
+  // });
 
   return (
     <>

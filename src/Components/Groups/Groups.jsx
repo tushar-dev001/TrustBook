@@ -1,6 +1,6 @@
 import React from "react";
-import GroupList from "../Pages/GroupList/GroupList";
-import MyGroups from "../Pages/MyGroups/MyGroups";
+import GroupList from "../../Pages/GroupList/GroupList";
+import MyGroups from "../../Pages/MyGroups/MyGroups";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Groups = () => {

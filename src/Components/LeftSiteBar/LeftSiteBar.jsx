@@ -1,15 +1,47 @@
 import User from "../Shared/User/User";
 import { FaUserFriends, FaUserTimes } from "react-icons/fa";
 import { MdGroups } from "react-icons/md";
-import { AiFillYoutube, AiFillSetting } from "react-icons/ai";
+import { AiFillYoutube, AiFillSetting, AiOutlineUserAdd } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const LeftSiteBar = () => {
+  const userTotalInfo = useSelector((state) => state.userData.userInfo);
+
   return (
     <div className="col-span-3">
+      {/* Login user */}
       <NavLink to="/profile">
         <div className="ml-5">
-          <User />
+          <div className="flex items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
+            <div>
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 lg:w-10 rounded-full">
+                  <img src="/public/assets/tushar.jpg" />
+                </div>
+              </label>
+            </div>
+
+            <div>
+              <h3 className="text-md font-pop font-semibold">{userTotalInfo.displayName}</h3>
+            </div>
+          </div>
+        </div>
+      </NavLink>
+
+      <NavLink to="friendspart/suggestion">
+        <div className="flex ml-5 mt-2 items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
+          <div>
+            <label
+              tabIndex={0}
+              className="btn btn-ghost btn-circle avatar text-4xl"
+            >
+              <AiOutlineUserAdd />
+            </label>
+          </div>
+          <div>
+            <h3 className="lg:text-xl font-pop font-semibold ">User List</h3>
+          </div>
         </div>
       </NavLink>
 
@@ -20,7 +52,7 @@ const LeftSiteBar = () => {
               tabIndex={0}
               className="btn btn-ghost btn-circle avatar text-4xl"
             >
-              <FaUserFriends className="text-[#3393F7]" />
+              <FaUserFriends />
             </label>
           </div>
           <div>

@@ -1,7 +1,4 @@
-import React from "react";
-import UserWithBtn from "../Shared/UserWithBtn/UserWithBtn";
-import Friends from "../Friends/Friends";
-import Suggestion from "../Suggestion/Suggestion";
+
 import { NavLink, Outlet } from "react-router-dom";
 
 const FriendsPartDesign = () => {
@@ -19,7 +16,7 @@ const FriendsPartDesign = () => {
         <div className=" col-span-4">
         <NavLink to="suggestion">
             <button className="px-4 py-2 bg-[#641AE6] rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-[#541AE6] hover:hover:ease-in-out duration-100  font-pop lg:text-lg lg:font-semibold">
-              Suggestion
+              User List
             </button>
           </NavLink>
         </div>

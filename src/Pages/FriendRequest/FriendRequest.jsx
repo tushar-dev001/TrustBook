@@ -1,5 +1,5 @@
 import React from 'react'
-import UserWithBtn from '../Shared/UserWithBtn/UserWithBtn'
+import UserWithBtn from '../../Components/Shared/UserWithBtn/UserWithBtn'
 
 const FriendRequest = () => {
   return (

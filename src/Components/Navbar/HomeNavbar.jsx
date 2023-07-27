@@ -65,16 +65,6 @@ const HomeNavbar = () => {
               <BsMessenger />
             </Link>
           </li>
-          {/* <li tabIndex={0}>
-        <details>
-          <summary>Parent</summary>
-          <ul className="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </details>
-      </li> */}
-          {/* <li><a>Item 3</a></li> */}
         </ul>
       </div>
 
@@ -103,9 +93,7 @@ const HomeNavbar = () => {
                 </Link>
               </li>
               <li>
-                <Link>
                   <Logout />
-                </Link>
               </li>
             </ul>
           </div>

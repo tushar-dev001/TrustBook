@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Alert } from "@mui/material";
 import {activeUser} from '../../Slices/UserSlices.js'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../../Components/Navbar/Navbar.jsx";
 
 
@@ -27,6 +27,8 @@ const Login = () => {
   const notify = toast();
   const navigate = useNavigate();
   let dispatch = useDispatch()
+  const userData = useSelector(state =>state.userData.userInfo)
+
 
   const handleInputFocuse = () => {
     setIsInputFocused(false);
@@ -35,13 +37,18 @@ const Login = () => {
     setIsInputFocused(true);
   };
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-        navigate('/home')
-    } else {
-    console.log("user nai");
-    }
-  });
+
+// user jodi login thake taile logout kora chara ae page a aste parbena
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     // console.log(user);
+  //     if(user){
+  //       navigate('/home')
+  //     }else{
+  //       console.log("user nai");
+  //     }
+  //   } 
+  // });
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -18,11 +18,11 @@ const Logout = () => {
         
         const userData = useSelector(state =>state.userData.userInfo)
       
-        useEffect(()=>{
-          if(!userData){
-            navigate('/login')
-          }
-        },[])
+        // useEffect(()=>{
+        //   if(!userData){
+        //     navigate('/login')
+        //   }
+        // },[])
 
     const handleLogout = () => {
         signOut(auth)

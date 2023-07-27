@@ -1,4 +1,4 @@
-import User from "../Shared/User/User";
+import User from "../../Components/Shared/User/User";
 import { RxCross2 } from "react-icons/rx";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { AiFillLike } from "react-icons/ai";

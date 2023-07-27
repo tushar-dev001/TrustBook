@@ -1,25 +1,25 @@
-import React from "react";
-import Navbar from "./Components/Navbar/Navbar";
+
 import Registration from "./Pages/Registration/Registration";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./Pages/Login/Login";
-import Home from "./Components/Home/Home";
+import Home from "./Pages/Home/Home";
+import Friends from "./Pages/Friends/Friends";
+import FriendRequest from "./Pages/FriendRequest/FriendRequest";
+
 import { ToastContainer } from "react-toastify";
 import RootLayOut from "./RootLayOut/RootLayOut";
-import Notification from "./Components/Notification/Notification";
-import Groups from "./Groups/Groups";
-import Message from "./Message/Message";
-import Profile from "./Components/Profile/Profile";
-import BlockUser from "./Components/BlockUser/BlockUser";
-import Settings from "./Components/Settings/Settings";
-import watch from "./Components/Watch/Watch";
-import Watch from "./Components/Watch/Watch";
-import FriendRequest from "./Components/FriendRequest/FriendRequest";
+import Profile from "./Pages/Profile/Profile";
+import BlockUser from "./Pages/BlockUser/BlockUser";
+import Settings from "./Pages/Settings/Settings";
+import Watch from "./Pages/Watch/Watch";
+import Message from "./Pages/Message/Message";
 import FriendsPartDesign from "./Components/FriendsPartDesign/FriendsPartDesign";
-import Friends from "./Components/Friends/Friends";
-import Suggestion from "./Components/Suggestion/Suggestion";
+import Suggestion from "./Pages/Suggestion/Suggestion";
+import Groups from "./Components/Groups/Groups"
 import GroupList from './Pages/GroupList/GroupList'
 import MyGroups from "./Pages/MyGroups/MyGroups";
+import Notification from "./Pages/Notification/Notification";
+
 
 const router = createBrowserRouter([
   {
@@ -29,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: '/profile',
+    element: <Profile/>
   },
   {
     path: '/',
@@ -66,7 +70,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/groups",
-        element: <Groups />,
+        element: <Groups/>,
         children: [
           {
             path: 'grouplist',
@@ -80,12 +84,9 @@ const router = createBrowserRouter([
       },
       {
         path: "/message",
-        element: <Message />,
+        element: <Message/>,
       },
-      {
-        path: '/profile',
-        element: <Profile/>
-      },
+      
       {
         path: '/block',
         element: <BlockUser/>
