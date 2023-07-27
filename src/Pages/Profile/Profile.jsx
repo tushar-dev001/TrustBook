@@ -160,7 +160,7 @@ const Profile = () => {
           </ul>
         </div>
 
-        <div className="w-[500px] justify-start">
+        <div className="md:w-[500px] justify-start">
           <div className="mt-5 md:mt-0">
             <ProfilePostInputBar />
           </div>
