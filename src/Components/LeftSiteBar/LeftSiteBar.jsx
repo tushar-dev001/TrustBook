@@ -8,6 +8,7 @@ import profile from '../../../public/assets/tushar.jpg'
 
 const LeftSiteBar = () => {
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
+  console.log(userTotalInfo);
 
   return (
     <div className="col-span-3">
@@ -18,7 +19,7 @@ const LeftSiteBar = () => {
             <div>
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 lg:w-10 rounded-full">
-                  <img src={profile} />
+                  <img src={userTotalInfo.photoURL} />
                 </div>
               </label>
             </div>

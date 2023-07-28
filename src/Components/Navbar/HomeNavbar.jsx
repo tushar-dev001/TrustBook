@@ -8,8 +8,13 @@ import { BsMessenger } from "react-icons/bs";
 import DarkMode from "../DarkMode/DarkMode";
 import Logout from "../Logout/Logout";
 import profile from '../../../public/assets/tushar.jpg'
+import { useSelector } from "react-redux";
 
 const HomeNavbar = () => {
+
+  const userTotalInfo = useSelector((state) => state.userData.userInfo);
+
+
   return (
     <div className="sm:navbar bg-primary flex md:flex-row flex-col items-center">
       {/* Navbar left part  */}
@@ -75,7 +80,7 @@ const HomeNavbar = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 lg:w-14 rounded-full">
-                <img src={profile} />
+                <img src={userTotalInfo.photoURL} />
               </div>
             </label>
             <ul

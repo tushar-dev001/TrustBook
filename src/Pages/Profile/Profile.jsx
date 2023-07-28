@@ -10,10 +10,73 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { AiFillLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import User from "../../Components/Shared/User/User";
-import coverPhoto from '../../../public/assets/cover.jpg'
-import profilePhoto from '../../../public/assets/tushar.jpg'
+import coverPhoto from "../../../public/assets/cover.jpg";
+import profilePhoto from "../../../public/assets/tushar.jpg";
+// images part
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
+import { createRef, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
+import { getAuth, updateProfile } from "firebase/auth";
+import { activeUser } from "../../Slices/UserSlices";
 
 const Profile = () => {
+  const [image, setImage] = useState();
+  const [profile, setProfile] = useState("");
+  const [cropData, setCropData] = useState("#");
+  // const [cropper, setCropper] = useState()
+  const cropperRef = createRef();
+  const auth = getAuth()
+  const dispatch = useDispatch()
+
+  const userTotalInfo = useSelector((state) => state.userData.userInfo);
+
+  const onChange = (e) => {
+    e.preventDefault();
+    let files;
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImage(reader.result);
+    };
+    reader.readAsDataURL(files[0]);
+  };
+
+  console.log(auth.currentUser);
+
+  const getCropData = () => {
+    if (typeof cropperRef.current?.cropper !== "undefined") {
+      setCropData(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
+      const storage = getStorage();
+      const storageRef = ref(storage, `profilepic/${userTotalInfo.uid}`);
+      const message4 = cropperRef.current?.cropper
+        .getCroppedCanvas()
+        .toDataURL();
+      uploadString(storageRef, message4, "data_url").then((snapshot) => {
+        setImage("")
+        getDownloadURL(storageRef).then((downloadURL) => {
+          updateProfile(auth.currentUser, {
+            photoURL: downloadURL,
+        }).then(()=>{
+          console.log("Photo Uploaded");
+          dispatch(activeUser(auth.currentUser))
+        localStorage.setItem('userInfo', JSON.stringify(auth.currentUser))
+        })
+        });
+      });
+    }
+  };
+
+  // useEffect(()=>{
+  //   setProfile(userTotalInfo.photoURL)
+  // }, [])
+
   return (
     <>
       {/* Navbar */}
@@ -36,13 +99,13 @@ const Profile = () => {
               <img
                 onClick={() => window.my_modal_2.showModal()}
                 className="w-20 h-20 md:w-40 md:h-40 rounded-full relative object-cover transition-transform transform hover:scale-105 duration-300 ease-in-out hover:opacity-100 cursor-pointer"
-                src={profilePhoto}
+                src={userTotalInfo.photoURL}
                 alt="Profile Images"
               />
               <BsFillCameraFill className="absolute mt-[-60px] ml-[125px] text-4xl hidden md:block" />
             </div>
             <div className="font-pop">
-              <h2 className="font-extrabold text-4xl">Tushar Imran</h2>
+              <h2 className="font-extrabold text-4xl">{userTotalInfo.displayName}</h2>
               <p className="text-sm mb-3 md:mb-0">
                 100B followers . 0 following
               </p>
@@ -60,12 +123,46 @@ const Profile = () => {
         <dialog id="my_modal_2" className="modal">
           <form method="dialog" className="modal-box">
             <h3 className="font-bold text-lg">Upload Image</h3>
+            {image ? (
+              <div className="img-preview"></div>
+            ) : userTotalInfo.photoURL ? (
+              <img
+                className="w-40 h-40 rounded-full mx-auto"
+                src={userTotalInfo.photoURL}
+                alt=""
+              />
+            ) : (
+              <img src={profilePhoto} alt="" />
+            )}
+            {/* aeta ekhane css korle hobena. index.css file a css korte hobe */}
             <input
               type="file"
+              onChange={onChange}
               className="file-input file-input-bordered w-full max-w-xs my-5"
             />{" "}
             <br />
-            <button className="btn btn-primary">Uploaded</button>
+            {image && (
+              <Cropper
+                ref={cropperRef}
+                style={{ height: 400, width: "100%" }}
+                zoomTo={0.5}
+                initialAspectRatio={1}
+                preview=".img-preview"
+                src={image}
+                viewMode={1}
+                minCropBoxHeight={10}
+                minCropBoxWidth={10}
+                background={false}
+                responsive={true}
+                autoCropArea={1}
+                checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+                guides={true}
+              />
+            )}
+            <br />
+            <button onClick={getCropData} className="btn btn-primary">
+              Uploaded
+            </button>
           </form>
           <form method="dialog" className="modal-backdrop">
             <button>close</button>
