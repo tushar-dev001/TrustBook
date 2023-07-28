@@ -212,7 +212,7 @@ const Profile = () => {
                 </p>
               </div>
               <figure className="border-b-2 pb-8">
-                <img src="/public/assets/tushar.png" alt="Shoes" />
+                <img src={profilePhoto} alt="Shoes" />
               </figure>
               <div className="pb-5 flex justify-around">
                 <div className="flex items-center gap-2 mt-5 text-lg font-medium">
@@ -250,7 +250,7 @@ const Profile = () => {
                 </p>
               </div>
               <figure className="border-b-2 pb-8">
-                <img src="/public/assets/tushar.png" alt="Shoes" />
+                <img src={profilePhoto} alt="Shoes" />
               </figure>
               <div className="pb-5 flex justify-around">
                 <div className="flex items-center gap-2 mt-5 text-lg font-medium">

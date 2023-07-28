@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import UserWithBtn from "../../Components/Shared/UserWithBtn/UserWithBtn";
 import { getDatabase, ref, onValue } from "firebase/database";
-import app from "../../firebase/firebase.config";
+import profile from "../../../public/assets/tushar.jpg"
 import { useSelector } from "react-redux";
 
 const Suggestion = () => {
@@ -41,7 +41,7 @@ const Suggestion = () => {
             <div>
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-10 lg:w-20 rounded-full">
-                  <img src="/public/assets/tushar.png" />
+                  <img src={profile} />
                 </div>
               </label>
             </div>

@@ -3,7 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { AiFillLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
-import { Link } from "react-router-dom";
+import profile from "../../../public/assets/tushar.jpg"
 
 const Home = () => {
   return (
@@ -31,7 +31,7 @@ const Home = () => {
           </p>
         </div>
         <figure className="border-b-2 pb-8">
-          <img src="/public/assets/tushar.png" alt="post Photo" />
+          <img src={profile} />
         </figure>
         <div className="pb-5 flex justify-around">
           <div className="flex items-center gap-2 mt-5 text-lg font-medium">

@@ -7,6 +7,7 @@ import { MdGroups2 } from "react-icons/md";
 import { BsMessenger } from "react-icons/bs";
 import DarkMode from "../DarkMode/DarkMode";
 import Logout from "../Logout/Logout";
+import profile from '../../../public/assets/tushar.jpg'
 
 const HomeNavbar = () => {
   return (
@@ -74,7 +75,7 @@ const HomeNavbar = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 lg:w-14 rounded-full">
-                <img src="/public/assets/tushar.png" />
+                <img src={profile} />
               </div>
             </label>
             <ul

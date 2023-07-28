@@ -1,4 +1,5 @@
 import React from 'react'
+import profile from "../../../../public/assets/tushar.jpg"
 
 const User = () => {
   return (
@@ -6,7 +7,7 @@ const User = () => {
         <div >
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 lg:w-10 rounded-full">
-              <img src="/public/assets/tushar.png" />
+              <img src={profile} />
             </div>
           </label>
         </div>

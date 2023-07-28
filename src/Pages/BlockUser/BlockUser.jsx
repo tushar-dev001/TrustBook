@@ -1,5 +1,6 @@
 import React from 'react'
 import UserWithBtn from '../../Components/Shared/UserWithBtn/UserWithBtn'
+import profile from "../../../public/assets/tushar.jpg"
 
 const BlockUser = () => {
   return (
@@ -19,7 +20,7 @@ const BlockUser = () => {
         <div >
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 lg:w-20 rounded-full">
-              <img src="/public/assets/tushar.png" />
+              <img src={profile} />
             </div>
           </label>
         </div>
@@ -35,7 +36,7 @@ const BlockUser = () => {
         <div >
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 lg:w-20 rounded-full">
-              <img src="/public/assets/tushar.png" />
+              <img src={profile} />
             </div>
           </label>
         </div>
@@ -51,7 +52,7 @@ const BlockUser = () => {
         <div >
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 lg:w-20 rounded-full">
-              <img src="/public/assets/tushar.png" />
+              <img src={profile} />
             </div>
           </label>
         </div>
@@ -67,7 +68,7 @@ const BlockUser = () => {
         <div >
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 lg:w-20 rounded-full">
-              <img src="/public/assets/tushar.png" />
+              <img src={profile} />
             </div>
           </label>
         </div>
