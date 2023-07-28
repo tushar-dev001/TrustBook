@@ -25,16 +25,17 @@ const Profile = () => {
           <img
             className="md:w-[940px] md:h-[350px] h-24 w-full mx-auto object-cover"
             src="/public/assets/cover.png"
-            alt=""
+            alt="cover Images"
           />
         </div>
-        <div className="max-w-[880px] mx-auto md:flex justify-between items-center border-b p-2 md:p-0 pb-4">
+        <div className="max-w-[880px] mx-auto md:flex justify-between items-center border-b p-2 md:p-0 md:pb-4">
           <div className="-mt-8 md:mt-12 md:flex items-center gap-10">
             <div className="">
               <img
+                onClick={() => window.my_modal_2.showModal()}
                 className="w-20 h-20 md:w-40 md:h-40 rounded-full relative object-cover transition-transform transform hover:scale-105 duration-300 ease-in-out hover:opacity-100 cursor-pointer"
                 src="/public/assets/tushar.png"
-                alt=""
+                alt="Profile Images"
               />
               <BsFillCameraFill className="absolute mt-[-60px] ml-[125px] text-4xl hidden md:block" />
             </div>
@@ -51,6 +52,24 @@ const Profile = () => {
             <button className="btn btn-secondary">Add Story</button>
           </div>
         </div>
+
+        {/* Modal start */}
+        {/* Open the modal using ID.showModal() method */}
+        <dialog id="my_modal_2" className="modal">
+          <form method="dialog" className="modal-box">
+            <h3 className="font-bold text-lg">Upload Image</h3>
+            <input
+              type="file"
+              className="file-input file-input-bordered w-full max-w-xs my-5"
+            />{" "}
+            <br />
+            <button className="btn btn-primary">Uploaded</button>
+          </form>
+          <form method="dialog" className="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
+        {/* Modal end */}
 
         <div className="max-w-[880px] mx-auto ">
           <ul className="flex gap-3 md:gap-7  py-6">
