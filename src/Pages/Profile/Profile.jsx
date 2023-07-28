@@ -24,7 +24,7 @@ const Profile = () => {
         <div className="w-full">
           <img
             className="md:w-[940px] md:h-[350px] h-24 w-full mx-auto object-cover"
-            src="/public/assets/cover.png"
+            src="../../../public/assets/cover.png"
             alt="cover Images"
           />
         </div>
@@ -34,7 +34,7 @@ const Profile = () => {
               <img
                 onClick={() => window.my_modal_2.showModal()}
                 className="w-20 h-20 md:w-40 md:h-40 rounded-full relative object-cover transition-transform transform hover:scale-105 duration-300 ease-in-out hover:opacity-100 cursor-pointer"
-                src="/public/assets/tushar.png"
+                src="../../../public/assets/tushar.png"
                 alt="Profile Images"
               />
               <BsFillCameraFill className="absolute mt-[-60px] ml-[125px] text-4xl hidden md:block" />
