@@ -49,7 +49,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="gap-4 flex">
+          <div className="gap-4 flex flex-wrap md:flex-nowrap">
             <button className="btn btn-secondary">Edit</button>
             <button className="btn btn-secondary">Add Story</button>
           </div>
@@ -73,8 +73,8 @@ const Profile = () => {
         </dialog>
         {/* Modal end */}
 
-        <div className="max-w-[880px] mx-auto ">
-          <ul className="flex gap-3 md:gap-7  py-6">
+        <div className="max-w-[880px] mx-auto pl-2 md:pl-0 ">
+          <ul className="flex gap-3 md:gap-7 py-6 flex-wrap md:flex-nowrap">
             <Link to="#post">
               {" "}
               <li>Post</li>
@@ -116,7 +116,7 @@ const Profile = () => {
           </button>
 
           <ul className="font-pop">
-            <li className="flex items-center mt-4">
+            <li className="flex items-center mt-4 flex-wrap md:flex-nowrap">
               <TbStepInto className="text-2xl font-bold bg-slate-500 rounded-full mr-3" />{" "}
               <p className="font-extrabold">Profile</p>.{" "}
               <p className="font-semibold">Entrepreneur</p>
@@ -175,7 +175,7 @@ const Profile = () => {
               <div>
                 <AiFillGithub className="text-2xl font-bold bg-slate-500 rounded-full mr-3" />
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center break-all">
                 <p className="">https://github.com/tushari789 </p>
               </div>
             </li>
