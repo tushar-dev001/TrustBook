@@ -8,7 +8,7 @@ const ProfilePostInputBar = () => {
         <div className='p-4 flex items-center gap-3 border-b '>
               <img
                 className="w-10 h-10 rounded-full relative object-cover transition-transform transform hover:scale-105 duration-300 ease-in-out hover:opacity-100 cursor-pointer"
-                src="/public/assets/tushar.jpg"
+                src="/public/assets/tushar.png"
                 alt=""
               />
 

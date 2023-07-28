@@ -74,7 +74,7 @@ const HomeNavbar = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 lg:w-14 rounded-full">
-                <img src="/public/assets/tushar.jpg" />
+                <img src="/public/assets/tushar.png" />
               </div>
             </label>
             <ul

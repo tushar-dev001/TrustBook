@@ -16,8 +16,7 @@ const Profile = () => {
     <>
       {/* Navbar */}
       <div className="hidden md:block">
-      <HomeNavbar />
-
+        <HomeNavbar />
       </div>
 
       {/* Profile photo and name design start */}
@@ -25,7 +24,7 @@ const Profile = () => {
         <div className="w-full">
           <img
             className="md:w-[940px] md:h-[350px] h-24 w-full mx-auto object-cover"
-            src="/public/assets/cover.jpg"
+            src="/public/assets/cover.png"
             alt=""
           />
         </div>
@@ -34,14 +33,16 @@ const Profile = () => {
             <div className="">
               <img
                 className="w-20 h-20 md:w-40 md:h-40 rounded-full relative object-cover transition-transform transform hover:scale-105 duration-300 ease-in-out hover:opacity-100 cursor-pointer"
-                src="/public/assets/tushar.jpg"
+                src="/public/assets/tushar.png"
                 alt=""
               />
               <BsFillCameraFill className="absolute mt-[-60px] ml-[125px] text-4xl hidden md:block" />
             </div>
             <div className="font-pop">
               <h2 className="font-extrabold text-4xl">Tushar Imran</h2>
-              <p className="text-sm mb-3 md:mb-0">100B followers . 0 following</p>
+              <p className="text-sm mb-3 md:mb-0">
+                100B followers . 0 following
+              </p>
             </div>
           </div>
 
@@ -190,7 +191,7 @@ const Profile = () => {
                 </p>
               </div>
               <figure className="border-b-2 pb-8">
-                <img src="/public/assets/tushar.jpg" alt="Shoes" />
+                <img src="/public/assets/tushar.png" alt="Shoes" />
               </figure>
               <div className="pb-5 flex justify-around">
                 <div className="flex items-center gap-2 mt-5 text-lg font-medium">
@@ -204,7 +205,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className=" col-span-6 bg-[#242526] mt-10">
+          <div className=" col-span-6 bg-[#242526] mt-10 p-2 md:p-0">
             <div className="card w-full  mx-auto shadow-2xl">
               <div className="">
                 <div className="flex items-center justify-between">
@@ -228,7 +229,7 @@ const Profile = () => {
                 </p>
               </div>
               <figure className="border-b-2 pb-8">
-                <img src="/public/assets/tushar.jpg" alt="Shoes" />
+                <img src="/public/assets/tushar.png" alt="Shoes" />
               </figure>
               <div className="pb-5 flex justify-around">
                 <div className="flex items-center gap-2 mt-5 text-lg font-medium">
