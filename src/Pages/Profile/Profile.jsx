@@ -26,8 +26,10 @@ import {
 } from "firebase/storage";
 import { getAuth, updateProfile } from "firebase/auth";
 import { activeUser } from "../../Slices/UserSlices";
+import { data } from "autoprefixer";
 
 const Profile = () => {
+  const [profile, setProfile] = useState();
   const [profileImage, setProfileImage] = useState();
   const [coverImage, setCoverImage] = useState();
   const [profileCropData, setProfileCropData] = useState("#");
@@ -131,9 +133,9 @@ const Profile = () => {
   };
   // cover photo end
 
-  // useEffect(()=>{
-  //   setProfile(userTotalInfo.photoURL)
-  // }, [])
+  useEffect(()=>{
+    setProfile(userTotalInfo.photoURL)
+  }, [data])
 
   return (
     <>
@@ -153,13 +155,13 @@ const Profile = () => {
           />
           <div
             onClick={() => window.cover_photo_modal.showModal()}
-            className="mt-[-60px] lg:ml-[965px] flex justify-between items-center absolute"
+            className="mt-[-60px] lg:ml-[965px]  justify-between items-center absolute"
           >
-            <button className="btn glass hidden lg:block">
+            <button className="btn glass hidden lg:flex ">
               <BsFillCameraFill className=" mr-4 text-4xl hidden md:block" />{" "}
               Edit Cover Photo
             </button>
-            <BsFillCameraFill className=" mr-auto text-2xl ml-[218px] mt-7 bg-gray-100 rounded-full p-1" />
+            <BsFillCameraFill className=" mr-auto text-2xl ml-[218px] mt-7 bg-gray-100 rounded-full p-1 md:hidden" />
           </div>
         </div>
 
@@ -173,7 +175,7 @@ const Profile = () => {
             ) : userTotalInfo.photoURL ? (
               <img
                 className="w-40 h-40 rounded-full mx-auto"
-                src={userTotalInfo.photoURL}
+                src={profile}
                 alt=""
               />
             ) : (

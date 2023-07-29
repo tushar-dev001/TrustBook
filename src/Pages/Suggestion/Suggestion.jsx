@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import UserWithBtn from "../../Components/Shared/UserWithBtn/UserWithBtn";
 import { getDatabase, ref, onValue } from "firebase/database";
-import profile from "../../../public/assets/tushar.jpg"
+import profile from "../../../public/assets/tushar.jpg";
 import { useSelector } from "react-redux";
+import { getAuth } from "firebase/auth";
 
 const Suggestion = () => {
   const [userList, setUserList] = useState([]);
   const db = getDatabase();
+  const auth = getAuth()
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
 
+  console.log(auth.currentUser);
+  console.log(userTotalInfo);
   useEffect(() => {
     const usersRef = ref(db, "users/");
     onValue(usersRef, (snapshot) => {
@@ -16,7 +20,7 @@ const Suggestion = () => {
       snapshot.forEach((item) => {
         // akhon je login ache tar sathe jodi user list er uid mile jai taile take user list a dekhabena.
         if (userTotalInfo.uid !== item.key) {
-          arr.push(item.val());
+          arr.push({ ...item.val(), userId: item.key });
         }
       });
       setUserList(arr);
