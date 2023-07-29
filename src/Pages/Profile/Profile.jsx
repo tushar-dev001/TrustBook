@@ -18,20 +18,29 @@ import "cropperjs/dist/cropper.css";
 import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getDownloadURL, getStorage, ref, uploadString } from "firebase/storage";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadString,
+} from "firebase/storage";
 import { getAuth, updateProfile } from "firebase/auth";
 import { activeUser } from "../../Slices/UserSlices";
 
 const Profile = () => {
-  const [image, setImage] = useState();
-  const [profile, setProfile] = useState("");
-  const [cropData, setCropData] = useState("#");
+  const [profileImage, setProfileImage] = useState();
+  const [coverImage, setCoverImage] = useState();
+  const [profileCropData, setProfileCropData] = useState("#");
+  const [coverCropData, setCoverCropData] = useState("#");
   // const [cropper, setCropper] = useState()
-  const cropperRef = createRef();
-  const auth = getAuth()
-  const dispatch = useDispatch()
+  const cropperProfileRef = createRef();
+  const cropperCoverRef = createRef();
+  const auth = getAuth();
+  const dispatch = useDispatch();
 
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
+
+  // profile part start
 
   const onChange = (e) => {
     e.preventDefault();
@@ -43,35 +52,84 @@ const Profile = () => {
     }
     const reader = new FileReader();
     reader.onload = () => {
-      setImage(reader.result);
+      setProfileImage(reader.result);
     };
     reader.readAsDataURL(files[0]);
   };
+  // profile part end
 
-  console.log(auth.currentUser);
+  // Cover part start
 
-  const getCropData = () => {
-    if (typeof cropperRef.current?.cropper !== "undefined") {
-      setCropData(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
+  const onChangeCover = (e) => {
+    e.preventDefault();
+    let Coverfiles;
+    if (e.dataTransfer) {
+      Coverfiles = e.dataTransfer.files;
+    } else if (e.target) {
+      Coverfiles = e.target.files;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCoverImage(reader.result);
+    };
+    reader.readAsDataURL(Coverfiles[0]);
+  };
+  // cover part end
+
+  
+  // profile photo start
+  const getProfileData = () => {
+    if (typeof cropperProfileRef.current?.cropper !== "undefined") {
+      setProfileCropData(
+        cropperProfileRef.current?.cropper.getCroppedCanvas().toDataURL()
+      );
       const storage = getStorage();
       const storageRef = ref(storage, `profilepic/${userTotalInfo.uid}`);
-      const message4 = cropperRef.current?.cropper
+      const message4 = cropperProfileRef.current?.cropper
         .getCroppedCanvas()
         .toDataURL();
       uploadString(storageRef, message4, "data_url").then((snapshot) => {
-        setImage("")
+        setProfileImage("");
         getDownloadURL(storageRef).then((downloadURL) => {
           updateProfile(auth.currentUser, {
             photoURL: downloadURL,
-        }).then(()=>{
-          console.log("Photo Uploaded");
-          dispatch(activeUser(auth.currentUser))
-        localStorage.setItem('userInfo', JSON.stringify(auth.currentUser))
-        })
+          }).then(() => {
+            console.log("Photo Uploaded");
+            dispatch(activeUser(auth.currentUser));
+            localStorage.setItem("userInfo", JSON.stringify(auth.currentUser));
+          });
         });
       });
     }
   };
+  // profile photo end
+
+  // cover photo start
+  const getCoverData = () => {
+    if (typeof cropperCoverRef.current?.cropper !== "undefined") {
+      setCoverCropData(
+        cropperCoverRef.current?.cropper.getCroppedCanvas().toDataURL()
+      );
+      const storage = getStorage();
+      const storageRef = ref(storage, `coverpic/${userTotalInfo.uid}`);
+      const message4 = cropperCoverRef.current?.cropper
+        .getCroppedCanvas()
+        .toDataURL();
+      uploadString(storageRef, message4, "data_url").then((snapshot) => {
+        setCoverImage("");
+        getDownloadURL(storageRef).then((downloadURL) => {
+          updateProfile(auth.currentUser, {
+            photoURL: downloadURL,
+          }).then(() => {
+            console.log("Photo Uploaded");
+            dispatch(activeUser(auth.currentUser));
+            localStorage.setItem("userInfo", JSON.stringify(auth.currentUser));
+          });
+        });
+      });
+    }
+  };
+  // cover photo end
 
   // useEffect(()=>{
   //   setProfile(userTotalInfo.photoURL)
@@ -86,13 +144,79 @@ const Profile = () => {
 
       {/* Profile photo and name design start */}
       <div className="shadow-xl bg-[#242526]">
-        <div className="w-full">
+        {/* cover photo part start */}
+        <div className="w-full relative">
           <img
             className="md:w-[940px] md:h-[350px] h-24 w-full mx-auto object-cover"
             src={coverPhoto}
             alt="cover Images"
           />
+          <div
+            onClick={() => window.cover_photo_modal.showModal()}
+            className="mt-[-60px] lg:ml-[965px] flex justify-between items-center absolute"
+          >
+            <button className="btn glass hidden lg:block">
+              <BsFillCameraFill className=" mr-4 text-4xl hidden md:block" />{" "}
+              Edit Cover Photo
+            </button>
+            <BsFillCameraFill className=" mr-auto text-2xl ml-[218px] mt-7 bg-gray-100 rounded-full p-1" />
+          </div>
         </div>
+
+        {/* Cover part Modal start */}
+        {/* Open the modal using ID.showModal() method */}
+        <dialog id="cover_photo_modal" className="modal">
+          <form method="dialog" className="modal-box">
+            <h3 className="font-bold text-lg">Upload Image</h3>
+            {coverImage ? (
+              <div className="cover-img-preview"></div>
+            ) : userTotalInfo.photoURL ? (
+              <img
+                className="w-40 h-40 rounded-full mx-auto"
+                src={userTotalInfo.photoURL}
+                alt=""
+              />
+            ) : (
+              <img src={userTotalInfo.photoURL} alt="" />
+            )}
+            {/* aeta ekhane css korle hobena. index.css file a css korte hobe */}
+            <input
+              type="file"
+              onChange={onChangeCover}
+              className="file-input file-input-bordered w-full max-w-xs my-5"
+            />{" "}
+            <br />
+            {coverImage && (
+              <Cropper
+                ref={cropperCoverRef}
+                style={{ height: 400, width: "100%" }}
+                zoomTo={0.5}
+                initialAspectRatio={1}
+                preview=".img-preview"
+                src={profileImage}
+                viewMode={1}
+                minCropBoxHeight={10}
+                minCropBoxWidth={10}
+                background={false}
+                responsive={true}
+                autoCropArea={1}
+                checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+                guides={true}
+              />
+            )}
+            <br />
+            <button onClick={getCoverData} className="btn btn-primary">
+              Uploaded
+            </button>
+          </form>
+          <form method="dialog" className="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
+        {/* cover part Modal end */}
+
+        {/* cover photo part end */}
+
         <div className="max-w-[880px] mx-auto md:flex justify-between items-center border-b p-2 md:p-0 md:pb-4">
           <div className="-mt-8 md:mt-12 md:flex items-center gap-10">
             <div className="">
@@ -105,7 +229,9 @@ const Profile = () => {
               <BsFillCameraFill className="absolute mt-[-60px] ml-[125px] text-4xl hidden md:block" />
             </div>
             <div className="font-pop">
-              <h2 className="font-extrabold text-4xl">{userTotalInfo.displayName}</h2>
+              <h2 className="font-extrabold text-4xl">
+                {userTotalInfo.displayName}
+              </h2>
               <p className="text-sm mb-3 md:mb-0">
                 100B followers . 0 following
               </p>
@@ -123,7 +249,7 @@ const Profile = () => {
         <dialog id="my_modal_2" className="modal">
           <form method="dialog" className="modal-box">
             <h3 className="font-bold text-lg">Upload Image</h3>
-            {image ? (
+            {profileImage ? (
               <div className="img-preview"></div>
             ) : userTotalInfo.photoURL ? (
               <img
@@ -141,14 +267,14 @@ const Profile = () => {
               className="file-input file-input-bordered w-full max-w-xs my-5"
             />{" "}
             <br />
-            {image && (
+            {profileImage && (
               <Cropper
-                ref={cropperRef}
+                ref={cropperProfileRef}
                 style={{ height: 400, width: "100%" }}
                 zoomTo={0.5}
                 initialAspectRatio={1}
                 preview=".img-preview"
-                src={image}
+                src={profileImage}
                 viewMode={1}
                 minCropBoxHeight={10}
                 minCropBoxWidth={10}
@@ -160,7 +286,7 @@ const Profile = () => {
               />
             )}
             <br />
-            <button onClick={getCropData} className="btn btn-primary">
+            <button onClick={getProfileData} className="btn btn-primary">
               Uploaded
             </button>
           </form>
