@@ -5,18 +5,18 @@ import {
   onValue,
   set,
   push,
-  remove,
 } from "firebase/database";
 import profile from "../../../public/assets/tushar.jpg";
 import { useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const Suggestion = () => {
   const [userList, setUserList] = useState([]);
   const [friendRequestInfo, setFriendRequestInfo] = useState([]);
   const [friendsInfo, setFriendsInfo] = useState([]);
+  const [blockInfo, setBlockInfo] = useState([]);
   const db = getDatabase();
-  const auth = getAuth();
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
 
   // set user start
@@ -31,41 +31,71 @@ const Suggestion = () => {
         }
       });
       setUserList(arr);
-      console.log(userList);
+      // console.log(userList);
     });
   }, []);
   // set user end
 
   // set friend request start
   const handleFriendRequest = (friendRequest) => {
-    console.log(friendRequest);
     set(push(ref(db, "friendRequest")), {
       senderName: userTotalInfo.displayName,
       senderId: userTotalInfo.uid,
       receverName: friendRequest.username,
-      recevederId: friendRequest.userId,
-    });
+      receverId: friendRequest.userId,
+    }).then(()=>{
+      console.log("send request");
+    })
   };
 
-  const handleFriendRequestCancel = (requestCancel) => {
-    remove(ref(db, "friendRequest/" + requestCancel.userId)).then(() => {
-      console.log("cancel friend request");
-    });
-  };
+  // const handleFriendRequestCancel = (cancelRequest) => {
+  //   console.log("asf", cancelRequest);
+  //   remove(ref(db, 'friendRequest'+ cancelRequest.userId))
+  //   .then(()=>{
+  //     console.log("cancel");
+  //   })
+  //   // remove(ref(db, "friendRequest/")).then(() => {
+  //   //   console.log("cancel friend request", cancelReq.userId);
+  //   //   // toast("Friend Request Cancel Successfully!");
+  //   // });
+  // };
+
+  const handleFriendRequestCancel=(cancelReq)=>{
+    console.log(cancelReq);
+    // remove(ref(db, 'friendRequest/' + cancelReq.userId))
+    // .then(() => {
+    //   console.log('Friend request canceled successfully');
+    // })
+    // .catch((error) => {
+    //   console.error('Error canceling friend request: ', error);
+    // });
+
+    // const friendRequestRef = ref(db, "friendRequest");
+    // onValue(friendRequestRef, (snapshot) => {
+    //   let friendId = "";
+    //   snapshot.forEach((item) => {
+    //     if (userTotalInfo.uid === item.val().receverId && cancelReq.) {
+          
+    //     }
+    //   });
+    // });
+
+
+  }
 
   // set friend request end
 
   // friend request send or not info start
   useEffect(() => {
-    const friendRequestInfoRef = ref(db, "friendRequest");
-    onValue(friendRequestInfoRef, (snapshot) => {
+    const friendRequestRef = ref(db, "friendRequest/");
+    onValue(friendRequestRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        arr.push(item.val().recevederId + item.val().senderId);
+        arr.push(item.val().receverId + item.val().senderId);
       });
       setFriendRequestInfo(arr);
     });
-  }, []);
+  }, [db]);
   // friend request send or not info end
 
   // friend request send or not info start
@@ -80,6 +110,19 @@ const Suggestion = () => {
     });
   }, []);
   // friend request send or not info end
+
+  // block send or not info start
+  useEffect(() => {
+    const friendRequestInfoRef = ref(db, "block");
+    onValue(friendRequestInfoRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        arr.push(item.val().blockReceivedId + item.val().blockSenderId);
+      });
+      setBlockInfo(arr);
+    });
+  }, []);
+  // block send or not info end
 
   return (
     <div>
@@ -114,24 +157,20 @@ const Suggestion = () => {
                   {friendRequestInfo.includes(
                     userTotalInfo.uid + user.userId
                   ) ? (
-                    <button className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
-                      Panding
+                    <button
+                      className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
+                    >
+                      Pending
                     </button>
                   ) : friendRequestInfo.includes(
                       user.userId + userTotalInfo.uid
                     ) ? (
-                    <>
-                      <button className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
-                        Panding
-                      </button>
-
                       <button
-                        onClick={() => handleFriendRequestCancel(user)}
+                      onClick={()=> handleFriendRequestCancel(user)}
                         className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
                       >
-                        Cancle
+                        Cancel
                       </button>
-                    </>
                   ) : friendsInfo.includes(user.userId + userTotalInfo.uid) ||
                     friendsInfo.includes(userTotalInfo.uid + user.userId) ? (
                     <button className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">

@@ -1,4 +1,4 @@
-import React from 'react'
+
 import profile from "../../../../public/assets/tushar.jpg"
 
 const User = () => {

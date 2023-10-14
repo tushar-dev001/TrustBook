@@ -4,7 +4,6 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   updateProfile,
-  onAuthStateChanged,
 } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import app from "../../firebase/firebase.config";
@@ -12,7 +11,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Alert } from "@mui/material";
 import Navbar from "../../Components/Navbar/Navbar";
-import { getDatabase, push, ref, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 
 const auth = getAuth(app);
 

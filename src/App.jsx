@@ -1,4 +1,3 @@
-
 import Registration from "./Pages/Registration/Registration";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Login from "./Pages/Login/Login";
@@ -15,11 +14,10 @@ import Watch from "./Pages/Watch/Watch";
 import Message from "./Pages/Message/Message";
 import FriendsPartDesign from "./Components/FriendsPartDesign/FriendsPartDesign";
 import Suggestion from "./Pages/Suggestion/Suggestion";
-import Groups from "./Components/Groups/Groups"
-import GroupList from './Pages/GroupList/GroupList'
+import Groups from "./Components/Groups/Groups";
+import GroupList from "./Pages/GroupList/GroupList";
 import MyGroups from "./Pages/MyGroups/MyGroups";
 import Notification from "./Pages/Notification/Notification";
-
 
 const router = createBrowserRouter([
   {
@@ -31,12 +29,12 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: '/profile',
-    element: <Profile/>
+    path: "/profile",
+    element: <Profile />,
   },
   {
-    path: '/',
-    element: <RootLayOut/>,
+    path: "/",
+    element: <RootLayOut />,
     children: [
       {
         path: "/home",
@@ -45,20 +43,20 @@ const router = createBrowserRouter([
       {
         path: "/friendspart",
         element: <FriendsPartDesign />,
-        children:[
+        children: [
           {
-            path: 'friends',
-            element: <Friends/>
+            path: "friends",
+            element: <Friends />,
           },
           {
-            path: 'suggestion',
-            element: <Suggestion/>
+            path: "suggestion",
+            element: <Suggestion />,
           },
           {
-            path: 'friendRequest',
-            element: <FriendRequest/>
+            path: "friendRequest",
+            element: <FriendRequest />,
           },
-        ]
+        ],
       },
       {
         path: "/friendrequest",
@@ -70,37 +68,37 @@ const router = createBrowserRouter([
       },
       {
         path: "/groups",
-        element: <Groups/>,
+        element: <Groups />,
         children: [
           {
-            path: 'grouplist',
-            element: <GroupList/>
+            path: "grouplist",
+            element: <GroupList />,
           },
           {
-            path: 'mygroups',
-            element: <MyGroups/>,
-          }
-        ]
+            path: "mygroups",
+            element: <MyGroups />,
+          },
+        ],
       },
       {
         path: "/message",
-        element: <Message/>,
+        element: <Message />,
       },
-      
+
       {
-        path: '/block',
-        element: <BlockUser/>
-      },
-      {
-        path: '/watch',
-        element: <Watch/>
+        path: "/block",
+        element: <BlockUser />,
       },
       {
-        path: '/settings',
-        element: <Settings/>
+        path: "/watch",
+        element: <Watch />,
       },
-    ]
-  }
+      {
+        path: "/settings",
+        element: <Settings />,
+      },
+    ],
+  },
 ]);
 
 const App = () => {

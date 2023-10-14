@@ -14,18 +14,20 @@ const BlockUser = () => {
     onValue(blockRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if (
-          userTotalInfo.uid === item.val().senderId ||
-          userTotalInfo.uid === item.val().recevederId
-        ) {
+        // if (
+        //   userTotalInfo.uid === item.val().senderId ||
+        //   userTotalInfo.uid === item.val().receverId
+        // ) {
           arr.push({ ...item.val(), blockId: item.key });
-        }
+        // }
       });
       setBlock(arr);
+      console.log(block);
     });
   }, []);
 
   const handleUnblock =(unfriend)=>{
+    console.log(unfriend);
     remove(ref(db, "block/" + unfriend.blockId)).then(()=>{
       console.log("unblock Confirm");
     })
@@ -60,19 +62,22 @@ const BlockUser = () => {
             </div>
 
             <div>
-              {userTotalInfo.uid === blockUser.recevederId ? (
+              {userTotalInfo.uid === blockUser.blockReceivedId ? (
                 <h3 className="text-md font-pop text-lg font-semibold">
-                  {blockUser.senderName}
+                  {blockUser.blockSenderName}
                 </h3>
               ) : (
                 <h3 className="text-md font-pop text-lg font-semibold">
-                  {blockUser.receverName}
+                  {blockUser.blockReceivedName}
                 </h3>
               )}
               <div className="mt-2 flex gap-2">
+                {blockUser.blockSenderId === userTotalInfo.uid &&
                 <button onClick={()=>handleUnblock(blockUser)} className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
-                  Unblock
-                </button>
+                Unblock
+              </button>
+                }
+                
               </div>
             </div>
           </div>

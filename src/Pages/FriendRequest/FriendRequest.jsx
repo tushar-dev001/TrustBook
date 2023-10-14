@@ -13,12 +13,13 @@ const FriendRequest = () => {
     onValue(friendRequestRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if (userTotalInfo.uid === item.val().recevederId) {
-          arr.push({...item.val(), userId: item.key});
+        if (userTotalInfo.uid === item.val().receverId) {
+          arr.push({...item.val(), userId:item.key});
         }
       });
       setFriendRequest(arr);
     });
+    console.log(friendRequest);
   }, []);
 
   const handleDeleteFriendRequest =(friendDelete)=>{

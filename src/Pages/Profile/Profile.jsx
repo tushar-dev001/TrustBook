@@ -235,7 +235,7 @@ const Profile = () => {
                 {userTotalInfo.displayName}
               </h2>
               <p className="text-sm mb-3 md:mb-0">
-                100B followers . 0 following
+                10B followers . 0 following
               </p>
             </div>
           </div>
