@@ -23,6 +23,8 @@ import { data } from "autoprefixer";
 import About from "./About";
 import Post from "./Post";
 import { getDatabase, onValue } from "firebase/database";
+import GroupList from "../GroupList/GroupList";
+import MyGroups from "../MyGroups/MyGroups";
 
 const Profile = () => {
   const [profile, setProfile] = useState();
@@ -429,7 +431,17 @@ const Profile = () => {
             <h2>Videos Part coming soon...</h2>
           </TabPanel>
           <TabPanel className="hidden md:block">
-            <h2>Groups Part coming soon...</h2>
+            <div className="flex justify-between mt-8">
+              <div>
+                <h3 className="text-3xl font-bold">Group List</h3>
+            <GroupList/>
+              </div>
+              <div>
+                <h3 className="text-3xl font-bold mb-5">My Group</h3>
+                <MyGroups/>
+              </div>
+
+            </div>
           </TabPanel>
         </Tabs>
       </div>

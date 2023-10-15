@@ -118,7 +118,7 @@ const GroupList = () => {
       <form>
         <input className="p-2 rounded-3xl" type="search" name="" id="" />
         <button
-          className="px-4 py-2 ml-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100"
+          className="px-4 py-2 ml-2 btn btn-primary"
           type="submit"
         >
           Search
@@ -225,7 +225,7 @@ const GroupList = () => {
                   <button
                   onClick={() => handleJoinGroup(group)}
                     type="button"
-                    className="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                    className="btn btn-primary"
                   >
                     Join
                   </button>

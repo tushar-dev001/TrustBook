@@ -5,7 +5,8 @@ import { GoComment } from "react-icons/go";
 import profile from "../../../public/assets/tushar.jpg";
 import ProfilePostInputBar from "../../Components/ProfilePostInputBar/ProfilePostInputBar";
 import { useEffect, useState } from "react";
-import { getDatabase, ref as dbRef, onValue } from "firebase/database";
+import { getDatabase, ref as dbRef, onValue, remove } from "firebase/database";
+import Swal from "sweetalert2";
 
 const Post = () => {
   const [posts, setPosts] = useState([]);
@@ -31,6 +32,31 @@ const Post = () => {
       setPosts(postData);
     });
   }, [db]); // Dependency array ensures the effect runs whenever 'db' changes
+
+
+  const handleDeletePost = (post) => {
+    console.log(post.id);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          remove(dbRef(db, "posts/" + post.id));
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   return (
     <>
@@ -65,8 +91,9 @@ const Post = () => {
                     </div>
                   </div>
                   <div className="flex align-center gap-4">
-                    <RxCross2 />
-                    <BiDotsVerticalRounded />
+                    <RxCross2  className="btn btn-circle btn-outline btn-sm"
+                  onClick={() => handleDeletePost(post)}/>
+                    <BiDotsVerticalRounded className="text-3xl font-extrabold"/>
                   </div>
                 </div>
               </div>

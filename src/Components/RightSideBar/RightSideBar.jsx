@@ -6,10 +6,12 @@ import UserWithBtn from "../Shared/UserWithBtn/UserWithBtn";
 import { getDatabase, onValue, push, ref, remove, set } from "firebase/database";
 import { useSelector } from "react-redux";
 import profile from '../../../public/assets/tushar.jpg'
+import MyGroups from "../../Pages/MyGroups/MyGroups";
 
 const RightSideBar = () => {
   const [friends, setFriends] = useState([]);
   const [friendRequest, setFriendRequest] = useState([]);
+  const [myGroups, setMyGroups] = useState([]);
   const db = getDatabase();
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
 
@@ -66,6 +68,24 @@ const RightSideBar = () => {
     })
 
   }
+  
+
+
+
+  useEffect(() => {
+    const groupsRef = ref(db, "groups/");
+    onValue(groupsRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        if (userTotalInfo.uid === item.val().groupAdminId) {
+          arr.push({ ...item.val(), groupInfoId: item.key });
+        }
+      });
+      setMyGroups(arr);
+    });
+  }, []);
+  const displayedGroups = myGroups.slice(0, 3);
+  
 
 
 
@@ -77,10 +97,23 @@ const RightSideBar = () => {
         <BiDotsVerticalRounded />
       </div>
 
+        
       <div className="mt-2 lg:ml-16 border-b border-b-slate-300">
-        <User />
-        <User />
-        <User />
+    {displayedGroups.map(myGroup =>(
+        <div key={myGroup.uid} className="flex lg:ml-2 lg:mt-2 gap-4 btn btn-outline my-4">
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 lg:w-20 rounded-full">
+                <img src={profile} />
+              </div>
+            </label>
+
+            <div >
+              <h3 className=" font-pop text-xl font-semibold">
+                {myGroup.groupInfoName}
+              </h3>
+            </div>
+          </div>
+        ))}
         <div
           onClick={() => window.my_modal_3.showModal()}
           className="flex items-center ml-3 my-3 gap-4 cursor-pointer"

@@ -101,7 +101,7 @@ const MyGroups = () => {
       <form className="flex md:block justify-center items-center">
         <input className="p-2 rounded-3xl" type="search" name="" id="" />
         <button
-          className="px-4 py-2 ml-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100"
+          className="px-4 py-2 ml-2 btn btn-primary"
           type="submit"
         >
           Search
@@ -128,14 +128,14 @@ const MyGroups = () => {
                 <button
                   // onClick={() => window.my_group_modal.showModal()}
                   onClick={() => handleGroupInfo(myGroup)}
-                  className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
+                  className="px-4 py-2 btn btn-primary "
                 >
                   Info
                 </button>
 
                 <button
                   onClick={() => handleMembers(myGroup)}
-                  className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
+                  className="px-4 py-2 btn btn-primary "
                 >
                   Members
                 </button>

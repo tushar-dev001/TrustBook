@@ -9,9 +9,8 @@ import {
 
 import { toast } from "react-toastify";
 import { getAuth } from "firebase/auth";
-import { v4 as uuidv4 } from 'uuid'; // Import the uuid package
+import { v4 as uuidv4 } from "uuid"; // Import the uuid package
 import { useSelector } from "react-redux";
-
 
 const ProfilePostInputBar = () => {
   // const userTotalInfo = useSelector((state) => state.userData.userInfo);
@@ -36,7 +35,7 @@ const ProfilePostInputBar = () => {
   const handlePost = () => {
     if (image && textData) {
       const { displayName, uid: userId } = userTotalInfo;
-      
+
       const storage = getStorage();
       const uniqueFilename = `${uuidv4()}-${image.name}`; // Generate a unique filename using uuid
       const storageReference = storageRef(storage, `images/${uniqueFilename}`); // Store images in 'images' folder with unique filename
@@ -49,7 +48,7 @@ const ProfilePostInputBar = () => {
             text: textData,
             imageUrl: downloadURL,
             userId: userId,
-            userName: displayName, 
+            userName: displayName,
             // ... other post data
           }).then(() => {
             console.log("Post created");
@@ -61,6 +60,16 @@ const ProfilePostInputBar = () => {
       });
     } else {
       console.error("Please select an image and enter text data!");
+      toast.error('Please select image!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 
