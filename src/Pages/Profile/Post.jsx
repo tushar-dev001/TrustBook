@@ -2,8 +2,7 @@ import { RxCross2 } from "react-icons/rx";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { AiFillLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
-import User from "../../Components/Shared/User/User";
-import profilePhoto from "../../../public/assets/tushar.jpg";
+import profile from "../../../public/assets/tushar.jpg";
 import ProfilePostInputBar from "../../Components/ProfilePostInputBar/ProfilePostInputBar";
 import { useEffect, useState } from "react";
 import { getDatabase, ref as dbRef, onValue } from "firebase/database";
@@ -14,7 +13,6 @@ const Post = () => {
 
   useEffect(() => {
     const postsRef = dbRef(db, "posts");
-
     // Listen for changes in the 'posts' path
     onValue(postsRef, (snapshot) => {
       const postData = [];
@@ -25,6 +23,7 @@ const Post = () => {
           text: childSnapshot.val().text,
           imageUrl: childSnapshot.val().imageUrl,
           userId: childSnapshot.val().userId,
+          userName: childSnapshot.val().userName,
         });
       });
 
@@ -32,47 +31,6 @@ const Post = () => {
       setPosts(postData);
     });
   }, [db]); // Dependency array ensures the effect runs whenever 'db' changes
-
-  //   useEffect(() => {
-  //     const postsRef = ref(db, "posts");
-  //     onValue(postsRef, (snapshot) => {
-  //       const postData = [];
-  //       snapshot.forEach((childSnapshot) => {
-  //         postData.push({
-  //           id: childSnapshot.key,
-  //           text: childSnapshot.val().text,
-  //           imageUrl: childSnapshot.val().imageUrl,
-  //           userId: childSnapshot.val().userId,
-  //         });
-  //       });
-  //       setPosts(postData);
-  //     });
-  //   }, [db]);
-
-  // useEffect(()=>{
-  //     const postRef = ref(db, 'post/')
-  //     onValue(postRef, (snapsort)=>{
-  //         let arr =[]
-  //         snapsort.forEach((item)=>{
-  //             arr.push({...item.val(), postId: item.key})
-  //         })
-  //         setPostView(arr)
-  //     })
-  //     console.log(postView);
-  // },[])
-
-  //     useEffect(()=>{
-  //         const postRef = ref(db, "post");
-  //     onValue(postRef, (snapshot) => {
-  //       let arr = [];
-  //       snapshot.forEach((item) => {
-  //         // if (userTotalInfo.uid !== item.val().groupAdminId) {
-  //         arr.push({ ...item.val(), groupId: item.key });
-  //         // }
-  //       });
-  //       setPostView(arr);
-  //     });
-  //   }, []);
 
   return (
     <>
@@ -82,22 +40,39 @@ const Post = () => {
       </div>
       <div className=" col-span-6  mt-10 p-2 md:p-0">
         <div className="card w-full  mx-auto shadow-2xl">
-        {posts.map((post) => (
-          <>
-            <div key={post.id} className="px-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <User />
+          {posts.map((post) => (
+            <>
+              <div key={post.id} className="px-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center gap-4 hover:bg-slate-700 hover:rounded-lg hover:ease-in-out duration-300 hover:text-[#D9DBE0]">
+                      <div>
+                        <label
+                          tabIndex={0}
+                          className="btn btn-ghost btn-circle avatar"
+                        >
+                          <div className="w-10 lg:w-10 rounded-full">
+                            <img src={profile} />
+                          </div>
+                        </label>
+                      </div>
+
+                      <div>
+                        <h3 className="text-md font-pop font-semibold">
+                          {post.userName}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex align-center gap-4">
+                    <RxCross2 />
+                    <BiDotsVerticalRounded />
+                  </div>
+                </div>
               </div>
-              <div className="flex align-center gap-4">
-                <RxCross2 />
-                <BiDotsVerticalRounded />
-              </div>
-            </div>
-          </div>
-            
+
               <div>
-                <p className="font-pop text-base">{post.text}</p>
+                <p className="font-pop text-base px-4 mb-4">{post.text}</p>
                 <figure className="border-b-2 pb-8">
                   <img src={post.imageUrl} alt="Shoes" />
                 </figure>
@@ -113,8 +88,7 @@ const Post = () => {
                   <p className="font-pop ">Comment</p>
                 </div>
               </div>
-          </>
-              
+            </>
           ))}
         </div>
       </div>

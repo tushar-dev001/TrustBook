@@ -6,17 +6,20 @@ import {
   uploadBytes,
   getDownloadURL,
 } from "firebase/storage";
-import { useSelector } from "react-redux";
+
 import { toast } from "react-toastify";
 import { getAuth } from "firebase/auth";
+import { v4 as uuidv4 } from 'uuid'; // Import the uuid package
+import { useSelector } from "react-redux";
+
 
 const ProfilePostInputBar = () => {
-  const userTotalInfo = useSelector((state) => state.userData.userInfo);
+  // const userTotalInfo = useSelector((state) => state.userData.userInfo);
   const db = getDatabase();
   const [textData, setTextData] = useState("");
   const [image, setImage] = useState(null);
   const auth = getAuth();
-  const userId = userTotalInfo.uid;
+  // const userId = userTotalInfo.uid;
   // const storage = getStorage();
   // const storageReference = storageRef(storage, "path/to/file");
 
@@ -29,13 +32,14 @@ const ProfilePostInputBar = () => {
     setImage(file);
   };
 
+  const userTotalInfo = useSelector((state) => state.userData.userInfo);
   const handlePost = () => {
     if (image && textData) {
-      // const storage = getStorage();
-      // const storageReference  = storageRef(storage, `images/${image.name}`);
-      // const storageReference = storageRef(storage, "path/to/file"); const storage = getStorage();
+      const { displayName, uid: userId } = userTotalInfo;
+      
       const storage = getStorage();
-      const storageReference = storageRef(storage, "images");
+      const uniqueFilename = `${uuidv4()}-${image.name}`; // Generate a unique filename using uuid
+      const storageReference = storageRef(storage, `images/${uniqueFilename}`); // Store images in 'images' folder with unique filename
 
       uploadBytes(storageReference, image).then((snapshot) => {
         console.log("Image uploaded successfully!");
@@ -45,6 +49,7 @@ const ProfilePostInputBar = () => {
             text: textData,
             imageUrl: downloadURL,
             userId: userId,
+            userName: displayName, 
             // ... other post data
           }).then(() => {
             console.log("Post created");
