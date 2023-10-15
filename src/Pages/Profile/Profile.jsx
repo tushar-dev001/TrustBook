@@ -1,17 +1,10 @@
-import { Link } from "react-router-dom";
+
 import HomeNavbar from "../../Components/Navbar/HomeNavbar";
 import { BsFillCameraFill } from "react-icons/bs";
-import { TbStepInto } from "react-icons/tb";
-import { MdSchool } from "react-icons/md";
-import { AiFillGithub } from "react-icons/ai";
-import ProfilePostInputBar from "../../Components/ProfilePostInputBar/ProfilePostInputBar";
-import { RxCross2 } from "react-icons/rx";
-import { BiDotsVerticalRounded } from "react-icons/bi";
-import { AiFillLike } from "react-icons/ai";
-import { GoComment } from "react-icons/go";
-import User from "../../Components/Shared/User/User";
 import coverPhoto from "../../../public/assets/cover.jpg";
 import profilePhoto from "../../../public/assets/tushar.jpg";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 // images part
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
@@ -27,6 +20,9 @@ import {
 import { getAuth, updateProfile } from "firebase/auth";
 import { activeUser } from "../../Slices/UserSlices";
 import { data } from "autoprefixer";
+import About from "./About";
+import Post from "./Post";
+import { getDatabase, onValue } from "firebase/database";
 
 const Profile = () => {
   const [profile, setProfile] = useState();
@@ -78,7 +74,6 @@ const Profile = () => {
   };
   // cover part end
 
-  
   // profile photo start
   const getProfileData = () => {
     if (typeof cropperProfileRef.current?.cropper !== "undefined") {
@@ -90,7 +85,7 @@ const Profile = () => {
       const message4 = cropperProfileRef.current?.cropper
         .getCroppedCanvas()
         .toDataURL();
-      uploadString(storageRef, message4, "data_url").then((snapshot) => {
+      uploadString(storageRef, message4, "data_url").then(() => {
         setProfileImage("");
         getDownloadURL(storageRef).then((downloadURL) => {
           updateProfile(auth.currentUser, {
@@ -133,9 +128,26 @@ const Profile = () => {
   };
   // cover photo end
 
-  useEffect(()=>{
-    setProfile(userTotalInfo.photoURL)
-  }, [data])
+  useEffect(() => {
+    setProfile(userTotalInfo.photoURL);
+  }, [data]);
+
+
+  // const [postView, setPostView] = useState([]);
+  // const db = getDatabase();
+  // useEffect(() => {
+  //   const starCountRef = ref(db, "post" );
+  //   onValue(starCountRef, (snapshot) => {
+  //       let arr =[]
+  //       snapshot.forEach((item)=>{
+  //           arr.push(item.val())
+  //       })
+  //       setPostView(arr)
+
+  //   });
+  //   console.log(postView);
+  // }, []);
+
 
   return (
     <>
@@ -145,7 +157,7 @@ const Profile = () => {
       </div>
 
       {/* Profile photo and name design start */}
-      <div className="shadow-xl bg-[#242526]">
+      <div className="shadow-xl ">
         {/* cover photo part start */}
         <div className="w-full relative">
           <img
@@ -161,7 +173,7 @@ const Profile = () => {
               <BsFillCameraFill className=" mr-4 text-4xl hidden md:block" />{" "}
               Edit Cover Photo
             </button>
-            <BsFillCameraFill className=" mr-auto text-2xl ml-[218px] mt-7 bg-gray-100 rounded-full p-1 md:hidden" />
+            <BsFillCameraFill className=" mr-auto text-2xl ml-[218px] mt-7  rounded-full p-1 md:hidden" />
           </div>
         </div>
 
@@ -241,9 +253,74 @@ const Profile = () => {
           </div>
 
           <div className="gap-4 flex flex-wrap md:flex-nowrap">
-            <button className="btn btn-secondary">Edit</button>
+            <button
+              onClick={()=>document.getElementById('my_modal_4').showModal()}
+              className="btn btn-secondary"
+            >
+              Edit
+            </button>
             <button className="btn btn-secondary">Add Story</button>
           </div>
+          {/* Edit button modal start */}
+          <dialog id="my_modal_4" className="modal">
+            <div className="modal-box">
+              <h3 className="font-bold text-2xl">Edit your profile</h3>
+              <form>
+                {/* TODO: update name and photo change */}
+                <input className="p-4 my-5" type="text" placeholder="Name" />
+                {/* photo upload start */}
+                <form method="dialog" className="modal-box">
+            <h3 className="font-bold text-lg">Upload Image</h3>
+            {profileImage ? (
+              <div className="img-preview"></div>
+            ) : userTotalInfo.photoURL ? (
+              <img
+                className="w-40 h-40 rounded-full mx-auto"
+                src={userTotalInfo.photoURL}
+                alt=""
+              />
+            ) : (
+              <img src={profilePhoto} alt="" />
+            )}
+            {/* aeta ekhane css korle hobena. index.css file a css korte hobe */}
+            <input
+              type="file"
+              onChange={onChange}
+              className="file-input file-input-bordered w-full max-w-xs my-5"
+            />{" "}
+            <br />
+            {profileImage && (
+              <Cropper
+                ref={cropperProfileRef}
+                style={{ height: 400, width: "100%" }}
+                zoomTo={0.5}
+                initialAspectRatio={1}
+                preview=".img-preview"
+                src={profileImage}
+                viewMode={1}
+                minCropBoxHeight={10}
+                minCropBoxWidth={10}
+                background={false}
+                responsive={true}
+                autoCropArea={1}
+                checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+                guides={true}
+              />
+            )}
+            <br />
+            <button onClick={getProfileData} className="btn btn-primary">
+              Uploaded
+            </button>
+          </form>
+                {/* photo upload end */}
+
+              </form>
+            </div>
+            <form method="dialog" className="modal-backdrop">
+              <button>close</button>
+            </form>
+          </dialog>
+          {/* Edit button modal end */}
         </div>
 
         {/* Modal start */}
@@ -298,7 +375,7 @@ const Profile = () => {
         </dialog>
         {/* Modal end */}
 
-        <div className="max-w-[880px] mx-auto pl-2 md:pl-0 ">
+        {/* <div className="max-w-[880px] mx-auto pl-2 md:pl-0 ">
           <ul className="flex gap-3 md:gap-7 py-6 flex-wrap md:flex-nowrap">
             <Link to="#post">
               {" "}
@@ -325,174 +402,40 @@ const Profile = () => {
               <li className="hidden md:block">Groups</li>
             </Link>
           </ul>
-        </div>
+        </div> */}
+        <Tabs className="md:max-w-[880px] mx-auto pl-2 md:pl-0 pb-5">
+          <TabList className="flex gap-3 md:gap-7 py-6 flex-wrap md:flex-nowrap">
+            <Tab>Post</Tab>
+            <Tab>Abut</Tab>
+            <Tab>Followers</Tab>
+            <Tab>Photos</Tab>
+            <Tab>Videos</Tab>
+            <Tab>Groups</Tab>
+          </TabList>
+
+          <TabPanel>
+            <Post></Post>
+          </TabPanel>
+          <TabPanel>
+            <About></About>
+          </TabPanel>
+          <TabPanel>
+            <h2>Followers Part coming soon...</h2>
+          </TabPanel>
+          <TabPanel>
+            <h2>Photos Part coming soon...</h2>
+          </TabPanel>
+          <TabPanel>
+            <h2>Videos Part coming soon...</h2>
+          </TabPanel>
+          <TabPanel className="hidden md:block">
+            <h2>Groups Part coming soon...</h2>
+          </TabPanel>
+        </Tabs>
       </div>
       {/* Profile photo and name design start */}
 
-      {/* Profile home section design start */}
-      <div className="md:flex justify-center gap-5 mt-6 mb-36 ">
-        <div className="md:w-[360px] bg-[#242526] py-7 px-5">
-          <h3>Intro</h3>
-          <p>
-            React Developer | MERN full Stack Developer (jr.) | Still learning
-          </p>
-          <button className="w-full bg-slate-800 p-4 rounded-xl mt-5">
-            Edit bio
-          </button>
-
-          <ul className="font-pop">
-            <li className="flex items-center mt-4 flex-wrap md:flex-nowrap">
-              <TbStepInto className="text-2xl font-bold bg-slate-500 rounded-full mr-3" />{" "}
-              <p className="font-extrabold">Profile</p>.{" "}
-              <p className="font-semibold">Entrepreneur</p>
-            </li>
-
-            <li className="flex items-center mt-4">
-              <div>
-                <MdSchool className="text-2xl font-bold bg-slate-500 rounded-full mr-3" />
-              </div>
-              <div className="flex items-center">
-                <p className="">
-                  <span className="font-extrabold">Studies to </span> MERN
-                  Full-Stack Web Developer at Creative IT Institute{" "}
-                </p>
-              </div>
-            </li>
-
-            <li className="flex items-center mt-4">
-              <div>
-                <MdSchool className="text-2xl font-bold bg-slate-500 rounded-full mr-3" />
-              </div>
-              <div className="flex items-center">
-                <p className="">
-                  <span className="font-extrabold">Studies to</span>M.G Heigh
-                  School
-                </p>
-              </div>
-            </li>
-
-            <li className="flex items-center mt-4">
-              <div>
-                <MdSchool className="text-2xl font-bold bg-slate-500 rounded-full mr-3" />
-              </div>
-              <div className="flex items-center">
-                <p className="">
-                  <span className="font-extrabold">Studies at</span>at Bogura
-                  Government College, Bogura
-                </p>
-              </div>
-            </li>
-
-            <li className="flex items-center mt-4">
-              <div>
-                <MdSchool className="text-2xl font-bold bg-slate-500 rounded-full mr-3" />
-              </div>
-              <div className="flex items-center">
-                <p className="">
-                  <span className="font-extrabold">Studies at</span> Web
-                  Designer| Developer and App Designer| Developer at Creative IT
-                  Institute{" "}
-                </p>
-              </div>
-            </li>
-
-            <li className="flex items-center mt-4">
-              <div>
-                <AiFillGithub className="text-2xl font-bold bg-slate-500 rounded-full mr-3" />
-              </div>
-              <div className="flex items-center break-all">
-                <p className="">https://github.com/tushari789 </p>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div className="md:w-[500px] justify-start">
-          <div className="mt-5 md:mt-0">
-            <ProfilePostInputBar />
-          </div>
-
-          {/* Profile Post design start */}
-          <div className=" col-span-6 bg-[#242526] mt-10 p-2 md:p-0">
-            <div className="card w-full  mx-auto shadow-2xl">
-              <div className="">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <User />
-                  </div>
-                  <div className="flex align-center gap-4">
-                    <RxCross2 />
-                    <BiDotsVerticalRounded />
-                  </div>
-                </div>
-
-                <p className="font-pop text-base">
-                  If a dog chews shoes whose shoes does he choose? Lorem, ipsum
-                  dolor sit amet consectetur adipisicing elit. Veniam sapiente
-                  assumenda, voluptatem atque iste dicta molestias repudiandae
-                  deleniti veritatis temporibus harum aspernatur, impedit modi
-                  ab libero nam accusamus inventore quam cum. Adipisci ad
-                  officiis exercitationem dolores sequi eos architecto fugiat
-                  fugit quo porro! Nam hic voluptas dolorum, porro ab velit.
-                </p>
-              </div>
-              <figure className="border-b-2 pb-8">
-                <img src={profilePhoto} alt="Shoes" />
-              </figure>
-              <div className="pb-5 flex justify-around">
-                <div className="flex items-center gap-2 mt-5 text-lg font-medium">
-                  <AiFillLike />
-                  <p className="font-pop ">Like</p>
-                </div>
-                <div className="flex items-center gap-2 mt-5 text-lg font-medium">
-                  <GoComment />
-                  <p className="font-pop ">Comment</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className=" col-span-6 bg-[#242526] mt-10 p-2 md:p-0">
-            <div className="card w-full  mx-auto shadow-2xl">
-              <div className="">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <User />
-                  </div>
-                  <div className="flex align-center gap-4">
-                    <RxCross2 />
-                    <BiDotsVerticalRounded />
-                  </div>
-                </div>
-
-                <p className="font-pop text-base">
-                  If a dog chews shoes whose shoes does he choose? Lorem, ipsum
-                  dolor sit amet consectetur adipisicing elit. Veniam sapiente
-                  assumenda, voluptatem atque iste dicta molestias repudiandae
-                  deleniti veritatis temporibus harum aspernatur, impedit modi
-                  ab libero nam accusamus inventore quam cum. Adipisci ad
-                  officiis exercitationem dolores sequi eos architecto fugiat
-                  fugit quo porro! Nam hic voluptas dolorum, porro ab velit.
-                </p>
-              </div>
-              <figure className="border-b-2 pb-8">
-                <img src={profilePhoto} alt="Shoes" />
-              </figure>
-              <div className="pb-5 flex justify-around">
-                <div className="flex items-center gap-2 mt-5 text-lg font-medium">
-                  <AiFillLike />
-                  <p className="font-pop ">Like</p>
-                </div>
-                <div className="flex items-center gap-2 mt-5 text-lg font-medium">
-                  <GoComment />
-                  <p className="font-pop ">Comment</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Profile Post design end */}
-        </div>
-      </div>
-      {/* Profile home section design end */}
+  
     </>
   );
 };

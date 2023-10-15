@@ -43,7 +43,8 @@
   }
   
   .msgbox{
-    height: 80vh;
+    height: 65vh;
+    padding: 20px;
     overflow-y: scroll;
   }
   
