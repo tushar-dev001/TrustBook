@@ -1,33 +1,37 @@
 import {
   GoogleAuthProvider,
   getAuth,
-  onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import{ useEffect, useState } from "react";
+import{  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Alert } from "@mui/material";
 import {activeUser} from '../../Slices/UserSlices.js'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Navbar from "../../Components/Navbar/Navbar.jsx";
+import Swal from "sweetalert2";
 
 
 
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
-
+const initialState = {
+  email: "",
+  password: "",
+  error: "",
+};
 const Login = () => {
+  const [values, setValues] = useState(initialState);
   const [forgotInputValues, setForgotInputValues] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [error, setError] = useState("");
-  const notify = toast();
+  const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
   let dispatch = useDispatch()
-  const userData = useSelector(state =>state.userData.userInfo)
 
 
   const handleInputFocuse = () => {
@@ -58,6 +62,33 @@ const Login = () => {
     form.reset();
     // console.log(email, password);
 
+    if (!email) {
+      setValues({
+        ...values,
+        error: "Enter Your Email",
+      });
+      return;
+    }
+
+    let pattern =
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/ ||
+      !pattern.test(password);
+
+    if (!password) {
+      setValues({
+        ...values,
+        error: "Enter Your Valid Password",
+      });
+      return;
+    }
+    setValues({
+      error: "",
+    });
+
+    // form.reset()
+
+
+    setLoader(true)
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         dispatch(activeUser(userCredential.user))
@@ -68,10 +99,16 @@ const Login = () => {
         if (!user.emailVerified) {
           toast("Please first verify your mail and try again");
         } else {
-          toast("Login Successfully");
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Login Successfully!',
+            showConfirmButton: false,
+            timer: 1500
+          })
           setTimeout(() => {
             navigate("/home");
-          }, 3000);
+          }, 1500);
         }
 
         // setInputValue('')
@@ -80,7 +117,6 @@ const Login = () => {
         const errorCode = error.code;
         setError(errorCode);
         console.log(errorCode);
-        const errorMessage = error.message;
       });
   };
 
@@ -90,10 +126,16 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
-        toast("Google Login Successfully");
-        setTimeout(() => {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Google Login Successfully!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          setTimeout(() => {
           navigate("/home");
-        }, 3000);
+        }, 1500);
       })
       .catch((error) => {
         console.error(error);
@@ -139,14 +181,37 @@ const Login = () => {
                   <span className="label-text font-pop">Email</span>
                 </label>
 
+                {
+                    values.error.includes("Email") && (
+                      <div
+                        className="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+                        role="alert"
+                      >
+                        <svg
+                          className="flex-shrink-0 inline w-4 h-4 mr-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span className="sr-only">Info</span>
+                        <div>
+                          <span className="font-medium">{values.error}</span>
+                        </div>
+                      </div>
+                    )
+                    // <h3>{}</h3>
+                  }
                 <input
                   type="email"
                   name="email"
-                  placeholder="email"
+                  placeholder="name@company.com"
                   onFocus={handleInputFocuse}
                   onBlur={handleInputBlur}
                   className="input input-bordered"
-                  required
+                  // required
                 />
                 {error === "auth/user-not-found" && isInputFocused && (
                   <Alert severity="error" className="font-pop">User not found</Alert>
@@ -157,14 +222,38 @@ const Login = () => {
                   <span className="label-text font-pop">Password</span>
                 </label>
 
+                {
+                    values.error.includes("Password") && (
+                      <div
+                        className="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+                        role="alert"
+                      >
+                        <svg
+                          className="flex-shrink-0 inline w-4 h-4 mr-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span className="sr-only">Info</span>
+                        <div>
+                          <span className="font-medium">{values.error}</span>
+                        </div>
+                      </div>
+                    )
+                    // <h3>{}</h3>
+                  }
+
                 <input
                   type="text"
                   name="password"
-                  placeholder="password"
+                  placeholder="••••••••"
                   onFocus={handleInputFocuse}
                   onBlur={handleInputBlur}
                   className="input input-bordered"
-                  required
+                  // required
                 />
                 {error === "auth/wrong-password" && isInputFocused && (
                   <Alert severity="error" className="font-pop">Wrong Password</Alert>
@@ -213,9 +302,22 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button type="submit" className="btn btn-primary font-pop">
+
+                  {
+                    loader
+                    ?
+                    <button type="submit" disabled className="btn btn-primary font-pop">
+                  Loading...
+                </button>
+                    :
+                    <button type="submit" className="btn btn-primary font-pop">
                   Login to Continue
                 </button>
+                  }
+
+                {/* <button type="submit" className="btn btn-primary font-pop">
+                  Login to Continue
+                </button> */}
               </div>
             </form>
           </div>

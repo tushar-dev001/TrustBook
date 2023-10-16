@@ -3,12 +3,6 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import { AiFillLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import profile from "../../../public/assets/tushar.jpg";
-
-// import { RxCross2 } from "react-icons/rx";
-// import { BiDotsVerticalRounded } from "react-icons/bi";
-// import { AiFillLike } from "react-icons/ai";
-// import { GoComment } from "react-icons/go";
-// import User from "../../Components/Shared/User/User";
 import ProfilePostInputBar from "../../Components/ProfilePostInputBar/ProfilePostInputBar";
 import { useEffect, useState } from "react";
 import { getDatabase, ref as dbRef, onValue, remove, update } from "firebase/database";
