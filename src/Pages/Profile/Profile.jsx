@@ -24,6 +24,7 @@ import About from "./About";
 import Post from "./Post";
 import GroupList from "../GroupList/GroupList";
 import MyGroups from "../MyGroups/MyGroups";
+import ScrollButton from "../../Components/ScrollButton/ScrollButton";
 
 const Profile = () => {
   const [profile, setProfile] = useState();
@@ -156,6 +157,7 @@ const Profile = () => {
       <div className="hidden md:block pb-[75px]">
         <HomeNavbar />
       </div>
+
 
       {/* Profile photo and name design start */}
       <div className="shadow-xl">
@@ -446,6 +448,7 @@ const Profile = () => {
       </div>
       {/* Profile photo and name design start */}
 
+<ScrollButton/>
   
     </>
   );

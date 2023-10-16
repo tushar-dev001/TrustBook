@@ -13,6 +13,7 @@ import ProfilePostInputBar from "../../Components/ProfilePostInputBar/ProfilePos
 import { useEffect, useState } from "react";
 import { getDatabase, ref as dbRef, onValue, remove } from "firebase/database";
 import Swal from "sweetalert2";
+import ScrollButton from "../../Components/ScrollButton/ScrollButton";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -118,6 +119,7 @@ const Home = () => {
           </div>
         </div>
       ))}
+    <ScrollButton/>
     </div>
   );
 };
