@@ -128,8 +128,8 @@ const RightSideBar = () => {
 
         
       <div className="mt-2 lg:ml-16 border-b border-b-slate-300 h-44 overflow-hidden overflow-y-scroll">
-    {myGroups.map(myGroup =>(
-        <div key={myGroup.uid} className="flex lg:ml-2 lg:mt-2 gap-4 btn btn-outline btn-lg my-4 ">
+    {myGroups.map((myGroup, index) =>(
+        <div key={index} className="flex lg:ml-2 lg:mt-2 gap-4 btn btn-outline btn-lg my-4 ">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 lg:w-20 rounded-full">
                 <img src={profile} />
@@ -241,8 +241,8 @@ const RightSideBar = () => {
      
 
       <div className="mt-2 lg:ml-16 border-b border-b-slate-300 h-60 overflow-hidden overflow-y-scroll">
-      {friends.map((friend) => (
-        <div key={friend.uid} className="flex lg:ml-2 lg:mt-2 gap-4 cursor-pointer btn btn-outline btn-lg mb-4">
+      {friends.map((friend, index) => (
+        <div key={index} className="flex lg:ml-2 lg:mt-2 gap-4 cursor-pointer btn btn-outline btn-lg mb-4">
         <div>
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 lg:w-20 rounded-full">

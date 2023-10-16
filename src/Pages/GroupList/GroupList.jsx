@@ -168,9 +168,8 @@ const GroupList = () => {
       </dialog>
 
       {groupDetails.length > 0 ? (
-        groupDetails.map((group) => (
-          <>
-            <div className=" px-5 mt-5 ">
+        groupDetails.map((group, index) => (
+            <div key={index} className=" px-5 mt-5 ">
               {/* <div className="flex items-center space-x-4">
                 <img src={profile} alt="profile" />
 
@@ -233,7 +232,6 @@ const GroupList = () => {
                 )}
               </div>
             </div>
-          </>
         ))
       ) : (
         <div

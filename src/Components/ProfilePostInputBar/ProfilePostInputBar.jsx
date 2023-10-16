@@ -52,10 +52,9 @@ const ProfilePostInputBar = () => {
 
       uploadBytes(storageReference, image).then((snapshot) => {
         console.log("Image uploaded successfully!");
-        return getDownloadURL(snapshot.ref)
-        .then((downloadURL) => {
+        return getDownloadURL(snapshot.ref).then((downloadURL) => {
           const postsRef = dbRef(db, "posts");
-          const timestamp = formatTimestamp(); 
+          const timestamp = formatTimestamp();
 
           // const timestamp = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()} ${new Date().getHours()}:${new Date().getMinutes()}`
 
@@ -64,7 +63,7 @@ const ProfilePostInputBar = () => {
             imageUrl: downloadURL,
             userId: userId,
             userName: displayName,
-            timestamp: timestamp, 
+            timestamp: timestamp,
             // ... other post data
           }).then(() => {
             console.log("Post created");
@@ -76,7 +75,7 @@ const ProfilePostInputBar = () => {
       });
     } else {
       console.error("Please select an image and enter text data!");
-      toast.error('Please select image!', {
+      toast.error("Please select image!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -85,26 +84,30 @@ const ProfilePostInputBar = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     }
   };
 
   return (
     <div className="rounded-lg">
-      <div className="p-4 flex items-center gap-3 border-b">
+      <div className="p-4 flex  gap-3 border-b">
         {/* Profile Image */}
+        <div className="flex flex-col gap-3">
         <input
           value={textData}
           onChange={handleTextDataChange}
           name="textPost"
           type="text"
           placeholder="What's on your mind?"
-          className="p-2 border-4 rounded-full md:w-[710px] "
+          className="p-2 border-4 rounded-full md:w-[710px] w-full "
         />
         <input onChange={handleImageChange} type="file" name="file" id="" />
+        </div>
+        <div>
         <button className="btn btn-primary" onClick={handlePost}>
           Post
         </button>
+        </div>
       </div>
     </div>
   );

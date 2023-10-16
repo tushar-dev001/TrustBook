@@ -90,13 +90,13 @@ const Home = () => {
   
 
   return (
-    <div className=" col-span-6 mt-24">
+    <div className=" col-span-6 md:mt-24 mt-44">
       <div className="mt-5 md:mt-0">
         <ProfilePostInputBar />
       </div>
 
       {posts.map((post) => (
-        <div key={post.id} className="card w-[90%] md:w-5/6 mx-auto shadow-2xl">
+        <div key={post.id} className="card w-[90%] md:w-5/6 mx-auto shadow-2xl my-10">
           <div className="md:card-body">
             <div className="flex items-center justify-between">
               <div>

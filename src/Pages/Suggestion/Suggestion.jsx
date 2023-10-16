@@ -142,9 +142,8 @@ const Suggestion = () => {
       </form>
 
       {userList.length > 0 ? (
-        userList.map((user) => (
-          <>
-            <div className="flex lg:ml-2 lg:mt-2 gap-4">
+        userList.map((user, index) => (
+            <div key={index} className="flex lg:ml-2 lg:mt-2 gap-4">
               <div>
                 <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                   <div className="w-10 lg:w-20 rounded-full">
@@ -192,7 +191,6 @@ const Suggestion = () => {
                 </div>
               </div>
             </div>
-          </>
         ))
       ) : (
         <div className="alert alert-info">

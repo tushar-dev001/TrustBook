@@ -5,7 +5,7 @@ import ScrollButton from "../ScrollButton/ScrollButton";
 const Groups = () => {
   return (
     <>
-      <div className="md:grid mb-4 gap-3 justify-center flex items-center md:grid-cols-12 lg:gap-2 mx-auto mt-24">
+      <div className="md:grid mb-4 gap-3 justify-center flex items-center md:grid-cols-12 lg:gap-2 mx-auto mt-44 md:mt-24">
         <div className=" col-span-6 ">
           <NavLink to="grouplist">
 
