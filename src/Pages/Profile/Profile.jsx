@@ -135,20 +135,6 @@ const Profile = () => {
   }, [data]);
 
 
-  // const [postView, setPostView] = useState([]);
-  // const db = getDatabase();
-  // useEffect(() => {
-  //   const starCountRef = ref(db, "post" );
-  //   onValue(starCountRef, (snapshot) => {
-  //       let arr =[]
-  //       snapshot.forEach((item)=>{
-  //           arr.push(item.val())
-  //       })
-  //       setPostView(arr)
-
-  //   });
-  //   console.log(postView);
-  // }, []);
 
 
   return (
@@ -447,8 +433,6 @@ const Profile = () => {
         </Tabs>
       </div>
       {/* Profile photo and name design start */}
-
-<ScrollButton/>
   
     </>
   );

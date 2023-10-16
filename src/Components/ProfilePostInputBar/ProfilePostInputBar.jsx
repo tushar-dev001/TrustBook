@@ -22,6 +22,16 @@ const ProfilePostInputBar = () => {
   // const storage = getStorage();
   // const storageReference = storageRef(storage, "path/to/file");
 
+  const formatTimestamp = () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const day = String(currentDate.getDate()).padStart(2, "0");
+    const hours = String(currentDate.getHours()).padStart(2, "0");
+    const minutes = String(currentDate.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
+  };
+
   const handleTextDataChange = (e) => {
     setTextData(e.target.value);
   };
@@ -42,13 +52,17 @@ const ProfilePostInputBar = () => {
 
       uploadBytes(storageReference, image).then((snapshot) => {
         console.log("Image uploaded successfully!");
-        getDownloadURL(snapshot.ref).then((downloadURL) => {
+        return getDownloadURL(snapshot.ref)
+        .then((downloadURL) => {
           const postsRef = dbRef(db, "posts");
+          const timestamp = formatTimestamp(); 
+
           push(postsRef, {
             text: textData,
             imageUrl: downloadURL,
             userId: userId,
             userName: displayName,
+            timestamp: timestamp, 
             // ... other post data
           }).then(() => {
             console.log("Post created");

@@ -18,6 +18,7 @@ import Groups from "./Components/Groups/Groups";
 import GroupList from "./Pages/GroupList/GroupList";
 import MyGroups from "./Pages/MyGroups/MyGroups";
 import Notification from "./Pages/Notification/Notification";
+import ScrollButton from "./Components/ScrollButton/ScrollButton";
 
 const router = createBrowserRouter([
   {
@@ -119,6 +120,7 @@ const App = () => {
       {/* Same as */}
       <ToastContainer />
       <RouterProvider router={router} />
+      <ScrollButton/>
     </>
   );
 };
