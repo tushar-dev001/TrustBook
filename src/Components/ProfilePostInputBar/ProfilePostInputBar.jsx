@@ -57,6 +57,8 @@ const ProfilePostInputBar = () => {
           const postsRef = dbRef(db, "posts");
           const timestamp = formatTimestamp(); 
 
+          // const timestamp = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()} ${new Date().getHours()}:${new Date().getMinutes()}`
+
           push(postsRef, {
             text: textData,
             imageUrl: downloadURL,

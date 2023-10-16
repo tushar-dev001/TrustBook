@@ -7,6 +7,7 @@ import ProfilePostInputBar from "../../Components/ProfilePostInputBar/ProfilePos
 import { useEffect, useState } from "react";
 import { getDatabase, ref as dbRef, onValue, remove, update } from "firebase/database";
 import Swal from "sweetalert2";
+import moment from "moment";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -115,6 +116,8 @@ const Home = () => {
                     <h3 className="text-md font-pop font-semibold">
                       {post.userName}
                     </h3>
+                    
+                    {/* <p>{moment(post.timestamp, "DDMMYY hh:mm").fromNow()}</p> */}
                     <p>{post.timestamp}</p>
                   </div>
                 </div>

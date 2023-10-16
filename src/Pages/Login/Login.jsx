@@ -151,8 +151,9 @@ const Login = () => {
         toast("Please check your email and verify your mail");
       })
       .catch((error) => {
-        const errorCode = error.errorCode;
-        const errorMessege = error.message;
+        
+        const errorMessage = error.message;
+        console.log(errorMessage);
       });
   };
 
