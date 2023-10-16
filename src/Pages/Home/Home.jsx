@@ -63,7 +63,7 @@ const Home = () => {
   };
 
   return (
-    <div className=" col-span-6 ">
+    <div className=" col-span-6 mt-24">
       <div className="mt-5 md:mt-0">
         <ProfilePostInputBar />
       </div>

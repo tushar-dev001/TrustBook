@@ -1,19 +1,48 @@
 import { useEffect, useState } from "react";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { BsPencilSquare } from "react-icons/bs";
-import User from "../Shared/User/User";
-import UserWithBtn from "../Shared/UserWithBtn/UserWithBtn";
 import { getDatabase, onValue, push, ref, remove, set } from "firebase/database";
 import { useSelector } from "react-redux";
 import profile from '../../../public/assets/tushar.jpg'
-import MyGroups from "../../Pages/MyGroups/MyGroups";
+
+
+
+const groupData = {
+  groupName: "",
+  groupTagline: "",
+};
 
 const RightSideBar = () => {
   const [friends, setFriends] = useState([]);
   const [friendRequest, setFriendRequest] = useState([]);
   const [myGroups, setMyGroups] = useState([]);
+  const [groupInfo, setGroupInfo] = useState(groupData);
   const db = getDatabase();
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
+
+
+  const handleGroupInputChange = (e) => {
+    setGroupInfo({
+      ...groupInfo,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleCreateGroup = () => {
+    set(push(ref(db, "groups")), {
+      groupInfoName: groupInfo.groupName,
+      groupInfoTagline: groupInfo.groupTagline,
+      groupAdminName: userTotalInfo.displayName,
+      groupAdminId: userTotalInfo.uid,
+    }).then(() => {
+      console.log("Group created");
+    });
+
+    setGroupInfo({
+      groupName: "",
+      groupTagline: "",
+    });
+  };
 
   useEffect(() => {
     const friendsRef = ref(db, "friends");
@@ -30,7 +59,7 @@ const RightSideBar = () => {
       setFriends(arr);
     });
   }, []);
-  const displayedFriends = friends.slice(0, 3);
+  // const displayedFriends = friends.slice(0, 3);
 
 
   useEffect(() => {
@@ -47,7 +76,7 @@ const RightSideBar = () => {
     console.log(friendRequest);
   }, []);
 
-  const displayedFriendRequest = friendRequest.slice(0, 2);
+  // const displayedFriendRequest = friendRequest.slice(0, 2);
 
 
   
@@ -84,7 +113,7 @@ const RightSideBar = () => {
       setMyGroups(arr);
     });
   }, []);
-  const displayedGroups = myGroups.slice(0, 3);
+  // const displayedGroups = myGroups.slice(0, 3);
   
 
 
@@ -92,15 +121,15 @@ const RightSideBar = () => {
   return (
     <div>
       {/* Your group part start */}
-      <div className="flex justify-around items-center lg:text-lg font-bold font-pop">
+      <div className="flex justify-around items-center lg:text-lg font-bold font-pop mt-24 ">
         <h4>Your Groups</h4>
         <BiDotsVerticalRounded />
       </div>
 
         
-      <div className="mt-2 lg:ml-16 border-b border-b-slate-300">
-    {displayedGroups.map(myGroup =>(
-        <div key={myGroup.uid} className="flex lg:ml-2 lg:mt-2 gap-4 btn btn-outline my-4">
+      <div className="mt-2 lg:ml-16 border-b border-b-slate-300 h-44 overflow-hidden overflow-y-scroll">
+    {myGroups.map(myGroup =>(
+        <div key={myGroup.uid} className="flex lg:ml-2 lg:mt-2 gap-4 btn btn-outline btn-lg my-4 ">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 lg:w-20 rounded-full">
                 <img src={profile} />
@@ -115,38 +144,46 @@ const RightSideBar = () => {
           </div>
         ))}
         <div
-          onClick={() => window.my_modal_3.showModal()}
+         
           className="flex items-center ml-3 my-3 gap-4 cursor-pointer"
         >
-          <div className="text-2xl">
-            <BsPencilSquare />
-          </div>
-          <h4 className="font-pop lg:text-lg font-bold">Create Group</h4>
         </div>
       </div>
+          <div  onClick={() => window.my_modal_3.showModal()} className="mt-2 lg:ml-16 border-b border-b-slate-300 py-4 flex items-center gap-3 cursor-pointer">
+          <BsPencilSquare className="text-2xl"/>
+          <h4 className="font-pop lg:text-lg font-bold">Create Group</h4>
+          </div>
       {/* <!-- Main modal --> */}
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box">
+        
           <h3 className="font-bold text-3xl">Create Your Group</h3>
-          <form>
+          <div>
             <input
               className="mt-4 p-4 rounded-xl"
               type="text"
+              name="groupName"
+              value={groupInfo.groupName}
+              onChange={handleGroupInputChange}
               placeholder="Enter Your Group Name"
             />{" "}
             <br />
             <input
               className="my-4 p-4 rounded-xl"
               type="text"
+              onChange={handleGroupInputChange}
+              value={groupInfo.groupTagline}
+              name="groupTagline"
               placeholder="Enter Your Group Tagline"
             />{" "}
             <br />
-            <input
+            {/* <input onClick={handleGroupInputChange}
               className="btn btn-primary "
               type="submit"
               value="Create Group"
-            />
-          </form>
+            /> */}
+            <button onClick={handleCreateGroup}>Create</button>
+          </div>
         </div>
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
@@ -162,9 +199,9 @@ const RightSideBar = () => {
         <p>See All</p>
       </div>
 
-      <div className="mt-2 lg:ml-16 mb-4 border-b border-b-slate-300 pb-4">
+      <div className="mt-2 lg:ml-16 mb-4 border-b border-b-slate-300 pb-4 h-44 overflow-hidden overflow-y-scroll">
         {
-            displayedFriendRequest.map((fReq) => (
+            friendRequest.map((fReq) => (
               <>
                 <div key={fReq.uid} className="flex lg:ml-2 lg:mt-2 gap-4">
                   <div>
@@ -203,9 +240,9 @@ const RightSideBar = () => {
 
      
 
-      <div className="mt-2 lg:ml-16 border-b border-b-slate-300">
-      {displayedFriends.map((friend) => (
-        <div key={friend.uid} className="flex lg:ml-2 lg:mt-2 gap-4 cursor-pointer btn btn-outline mb-4">
+      <div className="mt-2 lg:ml-16 border-b border-b-slate-300 h-60 overflow-hidden overflow-y-scroll">
+      {friends.map((friend) => (
+        <div key={friend.uid} className="flex lg:ml-2 lg:mt-2 gap-4 cursor-pointer btn btn-outline btn-lg mb-4">
         <div>
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 lg:w-20 rounded-full">

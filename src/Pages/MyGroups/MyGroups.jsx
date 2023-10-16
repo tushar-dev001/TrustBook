@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import UserWithBtn from "../../Components/Shared/UserWithBtn/UserWithBtn";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import profile from "../../../public/assets/tushar.jpg";
 import { useSelector } from "react-redux";
 import {
@@ -19,7 +18,6 @@ const MyGroups = () => {
   const [myGroupMembers, setMyGroupMembers] = useState([]);
 
   const db = getDatabase();
-  const notify = () => toast();
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
 
   useEffect(() => {
@@ -96,6 +94,15 @@ const MyGroups = () => {
     });
   };
 
+  const handleMembersDelete =(groupDelete)=>{
+    console.log(groupDelete);
+    remove(ref(db, 'groups/' + groupDelete.groupInfoId))
+    .then(()=>{
+      toast("Group Deleted Successfully!");
+    })
+
+  }
+
   return (
     <div>
       <form className="flex md:block justify-center items-center">
@@ -138,6 +145,12 @@ const MyGroups = () => {
                   className="px-4 py-2 btn btn-primary "
                 >
                   Members
+                </button>
+                <button
+                  onClick={() => handleMembersDelete(myGroup)}
+                  className="px-4 py-2 btn btn-primary "
+                >
+                  Delete
                 </button>
               </div>
             </div>

@@ -16,7 +16,7 @@ const HomeNavbar = () => {
 
 
   return (
-    <div className="sm:navbar bg-primary flex md:flex-row flex-col items-center">
+    <div className="sm:navbar bg-primary flex md:flex-row flex-col items-center fixed z-10 -mt-5">
       {/* Navbar left part  */}
       <div className="md:navbar-start">
         {/* <div className="dropdown">

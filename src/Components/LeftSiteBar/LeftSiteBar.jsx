@@ -11,7 +11,7 @@ const LeftSiteBar = () => {
   console.log(userTotalInfo);
 
   return (
-    <div className="col-span-3">
+    <div className="col-span-3 mt-24">
       {/* Login user */}
       <NavLink to="/profile">
         <div className="ml-5">

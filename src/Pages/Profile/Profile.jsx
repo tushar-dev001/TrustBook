@@ -22,7 +22,6 @@ import { activeUser } from "../../Slices/UserSlices";
 import { data } from "autoprefixer";
 import About from "./About";
 import Post from "./Post";
-import { getDatabase, onValue } from "firebase/database";
 import GroupList from "../GroupList/GroupList";
 import MyGroups from "../MyGroups/MyGroups";
 
@@ -154,12 +153,12 @@ const Profile = () => {
   return (
     <>
       {/* Navbar */}
-      <div className="hidden md:block">
+      <div className="hidden md:block pb-[75px]">
         <HomeNavbar />
       </div>
 
       {/* Profile photo and name design start */}
-      <div className="shadow-xl ">
+      <div className="shadow-xl">
         {/* cover photo part start */}
         <div className="w-full relative">
           <img

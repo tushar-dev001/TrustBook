@@ -4,7 +4,7 @@ import { NavLink, Outlet } from "react-router-dom";
 const FriendsPartDesign = () => {
   return (
     <>
-      <div className="md:grid mb-4 gap-3 justify-center flex items-center md:grid-cols-12 lg:gap-2 mx-auto">
+      <div className="md:grid mb-4 gap-3 justify-center flex items-center md:grid-cols-12 lg:gap-2 mx-auto mt-24">
         <div className=" col-span-4 ">
           <NavLink to="friends">
 

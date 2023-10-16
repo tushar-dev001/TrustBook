@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import UserWithBtn from "../../Components/Shared/UserWithBtn/UserWithBtn";
+import { useEffect, useState } from "react";
 import profile from "../../../public/assets/tushar.jpg";
 import { getDatabase, onValue, ref, remove } from "firebase/database";
 import { useSelector } from "react-redux";
