@@ -182,7 +182,7 @@ const RightSideBar = () => {
               type="submit"
               value="Create Group"
             /> */}
-            <button onClick={handleCreateGroup}>Create</button>
+            <button className="btn btn-primary" onClick={handleCreateGroup}>Create</button>
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">

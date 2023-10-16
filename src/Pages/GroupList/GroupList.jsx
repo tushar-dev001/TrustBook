@@ -81,6 +81,7 @@ const GroupList = () => {
       groupInfoName: info.groupInfoName,
       userId: userTotalInfo.uid,
       userName: userTotalInfo.displayName,
+      time: Date.now().toString(),
     }).then(() => {
       toast("Group join request Successfully!");
     });
@@ -94,8 +95,8 @@ const GroupList = () => {
       snapshot.forEach((item) => {
         console.log(item.val());
         if (
-          item.val().userId === userTotalInfo.uid &&
-          cancelGroup.groupInfoId === item.val().groupInfoId
+          item.val().userId == userTotalInfo.uid &&
+          cancelGroup.groupInfoId == item.val().groupInfoId
         ) {
           gid = item.key;
         }
@@ -104,7 +105,7 @@ const GroupList = () => {
     remove(ref(db, "groupsRequest/" + gid)).then(() => {
       toast("Group join request Cancel Successfully!");
     });
-  };
+    };
 
   return (
     <div>
@@ -158,7 +159,7 @@ const GroupList = () => {
               type="submit"
               value="Create Group"
             /> */}
-            <button onClick={handleCreateGroup}>Create</button>
+            <button className="btn btn-primary" onClick={handleCreateGroup}>Create</button>
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">

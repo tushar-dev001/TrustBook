@@ -34,7 +34,8 @@ const BlockUser = () => {
   }
 
   return (
-    <div>
+    <div className="mt-24">
+      <h3 className="text-3xl font-bold mb-5">Block Users</h3>
       <form>
         <input className="p-2 rounded-3xl" type="search" name="" id="" />
         <button
@@ -51,6 +52,7 @@ const BlockUser = () => {
       ?
       block.map((blockUser) => (
         <>
+        
           <div className="flex lg:ml-2 lg:mt-2 gap-4">
             <div>
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">

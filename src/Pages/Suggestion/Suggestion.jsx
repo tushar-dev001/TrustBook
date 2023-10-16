@@ -5,6 +5,7 @@ import {
   onValue,
   set,
   push,
+  remove,
 } from "firebase/database";
 import profile from "../../../public/assets/tushar.jpg";
 import { useSelector } from "react-redux";
@@ -16,6 +17,8 @@ const Suggestion = () => {
   const [friendRequestInfo, setFriendRequestInfo] = useState([]);
   const [friendsInfo, setFriendsInfo] = useState([]);
   const [blockInfo, setBlockInfo] = useState([]);
+
+  const [cancelReq, setCancelReq] = useState([])
   const db = getDatabase();
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
 
@@ -60,27 +63,29 @@ const Suggestion = () => {
   //   // });
   // };
 
-  const handleFriendRequestCancel=(cancelReq)=>{
+  useEffect(() => {
+    const friendsRef = ref(db, "friendRequest");
+    onValue(friendsRef, (snapshot) => {
+      let arr = [];
+      snapshot.forEach((item) => {
+        // if (
+        //   userTotalInfo.uid === item.val().senderId ||
+        //   userTotalInfo.uid === item.val().receverId
+        // ) {
+          arr.push({ ...item.val(), cancelId: item.key });
+        // }
+      });
+      setCancelReq(arr);
+    });
     console.log(cancelReq);
-    // remove(ref(db, 'friendRequest/' + cancelReq.userId))
-    // .then(() => {
-    //   console.log('Friend request canceled successfully');
-    // })
-    // .catch((error) => {
-    //   console.error('Error canceling friend request: ', error);
-    // });
+  }, []);
 
-    // const friendRequestRef = ref(db, "friendRequest");
-    // onValue(friendRequestRef, (snapshot) => {
-    //   let friendId = "";
-    //   snapshot.forEach((item) => {
-    //     if (userTotalInfo.uid === item.val().receverId && cancelReq.) {
-          
-    //     }
-    //   });
-    // });
-
-
+  const handleFriendRequestCancel=(user)=>{
+    console.log(user.cancelId);
+    remove(ref(db, 'friendRequest/'))
+    .then(()=>{
+      console.log("cancel");
+    })
   }
 
   // set friend request end

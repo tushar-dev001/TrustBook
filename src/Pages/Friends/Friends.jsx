@@ -37,9 +37,10 @@ const Friends = () => {
   };
 
   const handleBlock = (block) => {
-    console.log(userTotalInfo.uid == block.senderId);
-    console.log(userTotalInfo.uid == block.receverId);
     console.log(block);
+    // console.log(userTotalInfo.uid == block.senderId);
+    // console.log(userTotalInfo.uid == block.receverId);
+    // console.log(block);
     if (userTotalInfo.uid === block.senderId) {
       set(push(ref(db, "block")), {
         blockReceivedId: block.receverId,
