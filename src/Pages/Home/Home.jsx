@@ -7,7 +7,6 @@ import ProfilePostInputBar from "../../Components/ProfilePostInputBar/ProfilePos
 import { useEffect, useState } from "react";
 import { getDatabase, ref as dbRef, onValue, remove, update } from "firebase/database";
 import Swal from "sweetalert2";
-import moment from "moment";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);

@@ -1,6 +1,5 @@
 
 import { NavLink, Outlet } from "react-router-dom";
-import ScrollButton from "../ScrollButton/ScrollButton";
 
 const Groups = () => {
   return (

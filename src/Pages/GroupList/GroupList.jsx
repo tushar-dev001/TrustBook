@@ -169,7 +169,7 @@ const GroupList = () => {
 
       {groupDetails.length > 0 ? (
         groupDetails.map((group, index) => (
-            <div key={index} className=" px-5 mt-5 ">
+            <div key={index} className=" px-5 mt-5 w-full">
               {/* <div className="flex items-center space-x-4">
                 <img src={profile} alt="profile" />
 

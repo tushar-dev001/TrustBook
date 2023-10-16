@@ -9,8 +9,6 @@ import {
 } from "firebase/database";
 import profile from "../../../public/assets/tushar.jpg";
 import { useSelector } from "react-redux";
-import { getAuth } from "firebase/auth";
-import { toast } from "react-toastify";
 
 const Suggestion = () => {
   const [userList, setUserList] = useState([]);
