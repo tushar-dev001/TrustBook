@@ -38,8 +38,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Message = () => {
   return (
-    <div className="mt-44 md:mt-24">
-    <div className='chatbox'>
+    <div className="mt-36 md:mt-24">
+    <div className='chatbox p-3 md:p-6'>
 
     <div className='msgprofile'>
         {/* <div className='signal'>

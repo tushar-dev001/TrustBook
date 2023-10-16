@@ -90,20 +90,20 @@ const ProfilePostInputBar = () => {
 
   return (
     <div className="rounded-lg">
-      <div className="p-4 flex  gap-3 border-b">
+      <div className="p-4 flex w-full gap-3 border-b">
         {/* Profile Image */}
-        <div className="flex flex-col gap-3">
+        <div>
         <input
           value={textData}
           onChange={handleTextDataChange}
           name="textPost"
           type="text"
           placeholder="What's on your mind?"
-          className="p-2 border-4 rounded-full md:w-[710px] w-full "
+          className="p-2 border-4 rounded-full w-full mb-4 "
         />
         <input onChange={handleImageChange} type="file" name="file" id="" />
         </div>
-        <div>
+        <div className="">
         <button className="btn btn-primary" onClick={handlePost}>
           Post
         </button>
