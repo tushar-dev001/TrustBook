@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { BsPencilSquare } from "react-icons/bs";
-import { getDatabase, onValue, push, ref, remove, set } from "firebase/database";
-import { useSelector } from "react-redux";
-import profile from '../../../public/assets/tushar.jpg'
-
-
+import {
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  remove,
+  set,
+} from "firebase/database";
+import { useDispatch, useSelector } from "react-redux";
+import profile from "../../../public/assets/tushar.jpg";
+import { activeChat } from "../../Slices/activeChat/activeChatSlice";
 
 const groupData = {
   groupName: "",
@@ -20,6 +26,7 @@ const RightSideBar = () => {
   const db = getDatabase();
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
 
+  const dispatch = useDispatch();
 
   const handleGroupInputChange = (e) => {
     setGroupInfo({
@@ -51,12 +58,47 @@ const RightSideBar = () => {
       snapshot.forEach((item) => {
         if (
           userTotalInfo.uid === item.val().senderId ||
-          userTotalInfo.uid === item.val().receverId
+          userTotalInfo.uid === item.val().receiverId
         ) {
           arr.push({ ...item.val(), userId: item.key });
         }
       });
       setFriends(arr);
+      if(arr[0].senderId == userTotalInfo.uid){
+        dispatch(
+          activeChat({
+            type: "singleMsg",
+            name: arr[0].receiverName,
+            id: arr[0].receiverId,
+          })
+        );
+  
+        localStorage.setItem(
+          "activeChat",
+          JSON.stringify({
+            type: "singleMsg",
+            name: arr[0].receiverName,
+            id: arr[0].receiverId,
+          })
+        );
+      }else{
+        console.log(arr[0].senderId);
+      dispatch(
+        activeChat({
+          type: "singleMsg",
+          name: arr[0].senderName,
+          id: arr[0].senderId,
+        })
+      );
+      localStorage.setItem(
+        "activeChat",
+        JSON.stringify({
+          type: "singleMsg",
+          name: arr[0].receiverName,
+          id: arr[0].receiverId,
+        })
+      );
+      }
     });
   }, []);
   // const displayedFriends = friends.slice(0, 3);
@@ -67,39 +109,32 @@ const RightSideBar = () => {
     onValue(friendRequestRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if (userTotalInfo.uid === item.val().receverId) {
-          arr.push({...item.val(), userId:item.key});
+        if (userTotalInfo.uid === item.val().receiverId) {
+          arr.push({ ...item.val(), userId: item.key });
         }
       });
       setFriendRequest(arr);
     });
     console.log(friendRequest);
   }, []);
-
   // const displayedFriendRequest = friendRequest.slice(0, 2);
 
 
-  
-  const handleDeleteFriendRequest =(friendDelete)=>{
+  const handleDeleteFriendRequest = (friendDelete) => {
     console.log(friendDelete);
-    remove(ref(db, "friendRequest/" + friendDelete.userId)).then(()=>{
-    })
-  }
+    remove(ref(db, "friendRequest/" + friendDelete.userId)).then(() => {});
+  };
 
-  const  handleAcceptFriendRequest =(acceptFriend)=>{
+  const handleAcceptFriendRequest = (acceptFriend) => {
     console.log(acceptFriend);
-    set(push(ref(db, 'friends')), {
-      ...acceptFriend
-    }).then(()=>{
-      remove(ref(db, "friendRequest/" + acceptFriend.userId)).then(()=>{
+    set(push(ref(db, "friends")), {
+      ...acceptFriend,
+    }).then(() => {
+      remove(ref(db, "friendRequest/" + acceptFriend.userId)).then(() => {
         console.log("delete successfully");
-      })
-    })
-
-  }
-  
-
-
+      });
+    });
+  };
 
   useEffect(() => {
     const groupsRef = ref(db, "groups/");
@@ -112,11 +147,67 @@ const RightSideBar = () => {
       });
       setMyGroups(arr);
     });
-  }, []);
+  }, [db, userTotalInfo.uid]);
   // const displayedGroups = myGroups.slice(0, 3);
-  
 
+  const handleFriendsMsg = (item) => {
+    console.log(item);
+    if (item.senderId === userTotalInfo.uid) {
+      console.log(item.receiverId);
+      dispatch(
+        activeChat({
+          type: "singleMsg",
+          name: item.receiverName,
+          id: item.receiverId,
+        })
+      );
 
+      localStorage.setItem(
+        "activeChat",
+        JSON.stringify({
+          type: "singleMsg",
+          name: item.receiverName,
+          id: item.receiverId,
+        })
+      );
+    } else {
+      console.log(item.senderId);
+      dispatch(
+        activeChat({
+          type: "singleMsg",
+          name: item.senderName,
+          id: item.senderId,
+        })
+      );
+      localStorage.setItem(
+        "activeChat",
+        JSON.stringify({
+          type: "singleMsg",
+          name: item.receiverName,
+          id: item.receiverId,
+        })
+      );
+    }
+  };
+
+  const handleGroupMsg = (item) => {
+    console.log(item);
+    dispatch(
+      activeChat({
+        type: "groupMsg",
+        name: item.groupInfoName,
+        id: item.groupInfoId,
+      })
+    );
+    localStorage.setItem(
+      "activeChat",
+      JSON.stringify({
+        type: "groupMsg",
+        name: item.groupInfoName,
+        id: item.groupInfoId,
+      })
+    );
+  };
 
   return (
     <div>
@@ -126,37 +217,38 @@ const RightSideBar = () => {
         <BiDotsVerticalRounded />
       </div>
 
-        
       <div className="mt-2 lg:ml-16 border-b border-b-slate-300 h-44 overflow-hidden overflow-y-scroll">
-    {myGroups.map((myGroup, index) =>(
-        <div key={index} className="flex lg:ml-2 lg:mt-2 gap-4 btn btn-outline btn-lg my-4 ">
+        {myGroups.map((myGroup, index) => (
+          <div
+            onClick={() => handleGroupMsg(myGroup)}
+            key={index}
+            className="flex lg:ml-2 lg:mt-2 gap-4 btn btn-outline btn-lg my-4 "
+          >
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 lg:w-20 rounded-full">
                 <img src={profile} />
               </div>
             </label>
 
-            <div >
+            <div>
               <h3 className=" font-pop text-xl font-semibold">
                 {myGroup.groupInfoName}
               </h3>
             </div>
           </div>
         ))}
-        <div
-         
-          className="flex items-center ml-3 my-3 gap-4 cursor-pointer"
-        >
-        </div>
+        <div className="flex items-center ml-3 my-3 gap-4 cursor-pointer"></div>
       </div>
-          <div  onClick={() => window.my_modal_3.showModal()} className="mt-2 lg:ml-16 border-b border-b-slate-300 py-4 flex items-center gap-3 cursor-pointer">
-          <BsPencilSquare className="text-2xl"/>
-          <h4 className="font-pop lg:text-lg font-bold">Create Group</h4>
-          </div>
+      <div
+        onClick={() => window.my_modal_3.showModal()}
+        className="mt-2 lg:ml-16 border-b border-b-slate-300 py-4 flex items-center gap-3 cursor-pointer"
+      >
+        <BsPencilSquare className="text-2xl" />
+        <h4 className="font-pop lg:text-lg font-bold">Create Group</h4>
+      </div>
       {/* <!-- Main modal --> */}
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box">
-        
           <h3 className="font-bold text-3xl">Create Your Group</h3>
           <div>
             <input
@@ -182,7 +274,9 @@ const RightSideBar = () => {
               type="submit"
               value="Create Group"
             /> */}
-            <button className="btn btn-primary" onClick={handleCreateGroup}>Create</button>
+            <button className="btn btn-primary" onClick={handleCreateGroup}>
+              Create
+            </button>
           </div>
         </div>
         <form method="dialog" className="modal-backdrop">
@@ -200,35 +294,39 @@ const RightSideBar = () => {
       </div>
 
       <div className="mt-2 lg:ml-16 mb-4 border-b border-b-slate-300 pb-4 h-44 overflow-hidden overflow-y-scroll">
-        {
-            friendRequest.map((fReq) => (
-              <>
-                <div key={fReq.uid} className="flex lg:ml-2 lg:mt-2 gap-4">
-                  <div>
-                    <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                      <div className="w-10 lg:w-20 rounded-full">
-                        <img src={profile} />
-                      </div>
-                    </label>
+        {friendRequest.map((fReq) => (
+          <>
+            <div key={fReq.uid} className="flex lg:ml-2 lg:mt-2 gap-4">
+              <div>
+                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                  <div className="w-10 lg:w-20 rounded-full">
+                    <img src={profile} />
                   </div>
-    
-                  <div>
-                    <h3 className="text-md font-pop text-lg font-semibold">
-                      {fReq.senderName}
-                    </h3>
-                    <div className="mt-2 flex gap-2">
-                      <button onClick={()=>handleAcceptFriendRequest(fReq)} className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
-                        Accept
-                      </button>
-                      <button onClick={()=>handleDeleteFriendRequest(fReq)} className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
-                        Delete
-                      </button>
-                    </div>
-                  </div>
+                </label>
+              </div>
+
+              <div>
+                <h3 className="text-md font-pop text-lg font-semibold">
+                  {fReq.senderName}
+                </h3>
+                <div className="mt-2 flex gap-2">
+                  <button
+                    onClick={() => handleAcceptFriendRequest(fReq)}
+                    className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
+                  >
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => handleDeleteFriendRequest(fReq)}
+                    className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
+                  >
+                    Delete
+                  </button>
                 </div>
-              </>
-            ))
-        }
+              </div>
+            </div>
+          </>
+        ))}
       </div>
       {/* Your Friend request part end */}
 
@@ -238,32 +336,34 @@ const RightSideBar = () => {
         <BiDotsVerticalRounded />
       </div>
 
-     
-
       <div className="mt-2 lg:ml-16 border-b border-b-slate-300 h-60 overflow-hidden overflow-y-scroll">
-      {friends.map((friend, index) => (
-        <div key={index} className="flex lg:ml-2 lg:mt-2 gap-4 cursor-pointer btn btn-outline btn-lg mb-4">
-        <div>
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 lg:w-20 rounded-full">
-              <img src={profile} />
+        {friends.map((friend, index) => (
+          <div
+            onClick={() => handleFriendsMsg(friend)}
+            key={index}
+            className="flex lg:ml-2 lg:mt-2 gap-4 cursor-pointer btn btn-outline btn-lg mb-4"
+          >
+            <div>
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 lg:w-20 rounded-full">
+                  <img src={profile} />
+                </div>
+              </label>
             </div>
-          </label>
-        </div>
 
-        <div>
-          {userTotalInfo.uid === friend.senderId ? (
-            <h3 className="text-md font-pop text-lg font-semibold">
-              {friend.receverName}
-            </h3>
-          ) : (
-            <h3 className="text-md font-pop text-lg font-semibold">
-              {friend.senderName}
-            </h3>
-          )}
-        </div>
-      </div>
-      ))}
+            <div>
+              {userTotalInfo.uid === friend.senderId ? (
+                <h3 className="text-md font-pop text-lg font-semibold">
+                  {friend.receiverName}
+                </h3>
+              ) : (
+                <h3 className="text-md font-pop text-lg font-semibold">
+                  {friend.senderName}
+                </h3>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Contact part end */}

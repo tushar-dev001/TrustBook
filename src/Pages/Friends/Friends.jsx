@@ -21,7 +21,7 @@ const Friends = () => {
       snapshot.forEach((item) => {
         if (
           userTotalInfo.uid === item.val().senderId ||
-          userTotalInfo.uid === item.val().receverId
+          userTotalInfo.uid === item.val().receiverId
         ) {
           arr.push({ ...item.val(), userId: item.key });
         }
@@ -39,12 +39,12 @@ const Friends = () => {
   const handleBlock = (block) => {
     console.log(block);
     // console.log(userTotalInfo.uid == block.senderId);
-    // console.log(userTotalInfo.uid == block.receverId);
+    // console.log(userTotalInfo.uid == block.receiverId);
     // console.log(block);
     if (userTotalInfo.uid === block.senderId) {
       set(push(ref(db, "block")), {
-        blockReceivedId: block.receverId,
-        blockReceivedName: block.receverName,
+        blockReceivedId: block.receiverId,
+        blockReceivedName: block.receiverName,
         blockSenderId: block.senderId,
         blockSenderName: block.senderName,
       }).then(() => {
@@ -56,8 +56,8 @@ const Friends = () => {
       set(push(ref(db, "block")), {
         blockReceivedId: block.senderId,
         blockReceivedName: block.senderName,
-        blockSenderId: block.receverId,
-        blockSenderName: block.receverName,
+        blockSenderId: block.receiverId,
+        blockSenderName: block.receiverName,
       }).then(() => {
         remove(ref(db, "friends/" + block.userId)).then(() => {
           console.log("Block successfully");
@@ -93,7 +93,7 @@ const Friends = () => {
               <div>
                 {userTotalInfo.uid === friend.senderId ? (
                   <h3 className="text-md font-pop text-lg font-semibold">
-                    {friend.receverName}
+                    {friend.receiverName}
                   </h3>
                 ) : (
                   <h3 className="text-md font-pop text-lg font-semibold">

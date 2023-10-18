@@ -87,6 +87,7 @@
     font-weight: bold;
     margin: 10px 0;
     align-self: flex-start;
+    max-width: 70%;
   }
   
   .getimg{
@@ -117,6 +118,8 @@
     margin: 10px 0;
     color: white;
     align-self: flex-end;
+    max-width: 70%;
+
   }
   
   .sendimg{

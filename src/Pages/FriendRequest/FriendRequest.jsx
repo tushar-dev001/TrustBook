@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import profile from "../../../public/assets/tushar.jpg";
-import { getDatabase, onValue, push, ref, remove, set } from "firebase/database";
+import {
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  remove,
+  set,
+} from "firebase/database";
 import { useSelector } from "react-redux";
 
 const FriendRequest = () => {
@@ -13,8 +20,8 @@ const FriendRequest = () => {
     onValue(friendRequestRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        if (userTotalInfo.uid === item.val().receverId) {
-          arr.push({...item.val(), userId:item.key});
+        if (userTotalInfo.uid === item.val().receiverId) {
+          arr.push({ ...item.val(), userId: item.key });
         }
       });
       setFriendRequest(arr);
@@ -22,23 +29,21 @@ const FriendRequest = () => {
     console.log(friendRequest);
   }, []);
 
-  const handleDeleteFriendRequest =(friendDelete)=>{
+  const handleDeleteFriendRequest = (friendDelete) => {
     console.log(friendDelete);
-    remove(ref(db, "friendRequest/" + friendDelete.userId)).then(()=>{
-    })
-  }
+    remove(ref(db, "friendRequest/" + friendDelete.userId)).then(() => {});
+  };
 
-  const  handleAcceptFriendRequest =(acceptFriend)=>{
+  const handleAcceptFriendRequest = (acceptFriend) => {
     console.log(acceptFriend);
-    set(push(ref(db, 'friends')), {
-      ...acceptFriend
-    }).then(()=>{
-      remove(ref(db, "friendRequest/" + acceptFriend.userId)).then(()=>{
+    set(push(ref(db, "friends")), {
+      ...acceptFriend,
+    }).then(() => {
+      remove(ref(db, "friendRequest/" + acceptFriend.userId)).then(() => {
         console.log("delete successfully");
-      })
-    })
-
-  }
+      });
+    });
+  };
 
   return (
     <div>
@@ -70,10 +75,16 @@ const FriendRequest = () => {
                   {fReq.senderName}
                 </h3>
                 <div className="mt-2 flex gap-2">
-                  <button onClick={()=>handleAcceptFriendRequest(fReq)} className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
+                  <button
+                    onClick={() => handleAcceptFriendRequest(fReq)}
+                    className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
+                  >
                     Accept
                   </button>
-                  <button onClick={()=>handleDeleteFriendRequest(fReq)} className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
+                  <button
+                    onClick={() => handleDeleteFriendRequest(fReq)}
+                    className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
+                  >
                     Delete
                   </button>
                 </div>

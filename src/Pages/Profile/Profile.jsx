@@ -235,6 +235,7 @@ const Profile = () => {
               <h2 className="font-extrabold text-4xl">
                 {userTotalInfo.displayName}
               </h2>
+              <p className="my-2">{userTotalInfo.email}</p>
               <p className="text-sm mb-3 md:mb-0">
                 10B followers . 0 following
               </p>

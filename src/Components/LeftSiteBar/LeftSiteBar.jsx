@@ -4,11 +4,9 @@ import { MdGroups } from "react-icons/md";
 import { AiFillYoutube, AiFillSetting, AiOutlineUserAdd } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import profile from '../../../public/assets/tushar.jpg'
 
 const LeftSiteBar = () => {
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
-  console.log(userTotalInfo);
 
   return (
     <div className="col-span-3 mt-24">

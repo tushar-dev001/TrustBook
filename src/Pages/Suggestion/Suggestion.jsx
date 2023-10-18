@@ -16,7 +16,7 @@ const Suggestion = () => {
   const [friendsInfo, setFriendsInfo] = useState([]);
   const [blockInfo, setBlockInfo] = useState([]);
 
-  const [cancelReq, setCancelReq] = useState([])
+  const [cancelReq, setCancelReq] = useState([]);
   const db = getDatabase();
   const userTotalInfo = useSelector((state) => state.userData.userInfo);
 
@@ -42,11 +42,11 @@ const Suggestion = () => {
     set(push(ref(db, "friendRequest")), {
       senderName: userTotalInfo.displayName,
       senderId: userTotalInfo.uid,
-      receverName: friendRequest.username,
-      receverId: friendRequest.userId,
-    }).then(()=>{
+      receiverName: friendRequest.username,
+      receiverId: friendRequest.userId,
+    }).then(() => {
       console.log("send request");
-    })
+    });
   };
 
   // const handleFriendRequestCancel = (cancelRequest) => {
@@ -68,9 +68,9 @@ const Suggestion = () => {
       snapshot.forEach((item) => {
         // if (
         //   userTotalInfo.uid === item.val().senderId ||
-        //   userTotalInfo.uid === item.val().receverId
+        //   userTotalInfo.uid === item.val().receiverId
         // ) {
-          arr.push({ ...item.val(), cancelId: item.key });
+        arr.push({ ...item.val(), cancelId: item.key });
         // }
       });
       setCancelReq(arr);
@@ -78,13 +78,12 @@ const Suggestion = () => {
     console.log(cancelReq);
   }, []);
 
-  const handleFriendRequestCancel=(user)=>{
+  const handleFriendRequestCancel = (user) => {
     console.log(user.cancelId);
-    remove(ref(db, 'friendRequest/'))
-    .then(()=>{
+    remove(ref(db, "friendRequest/")).then(() => {
       console.log("cancel");
-    })
-  }
+    });
+  };
 
   // set friend request end
 
@@ -94,7 +93,7 @@ const Suggestion = () => {
     onValue(friendRequestRef, (snapshot) => {
       let arr = [];
       snapshot.forEach((item) => {
-        arr.push(item.val().receverId + item.val().senderId);
+        arr.push(item.val().receiverId + item.val().senderId);
       });
       setFriendRequestInfo(arr);
     });
@@ -141,54 +140,50 @@ const Suggestion = () => {
 
       {userList.length > 0 ? (
         userList.map((user, index) => (
-            <div key={index} className="flex lg:ml-2 lg:mt-2 gap-4">
-              <div>
-                <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                  <div className="w-10 lg:w-20 rounded-full">
-                    <img src={profile} />
-                  </div>
-                </label>
-              </div>
-
-              <div>
-                <h3 className="text-md font-pop text-lg font-semibold">
-                  {user.username}
-                </h3>
-                <p className="font-pop text-sm">{user.email}</p>
-                <div className="mt-2 flex gap-2">
-                  {friendRequestInfo.includes(
-                    userTotalInfo.uid + user.userId
-                  ) ? (
-                    <button
-                      className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
-                    >
-                      Pending
-                    </button>
-                  ) : friendRequestInfo.includes(
-                      user.userId + userTotalInfo.uid
-                    ) ? (
-                      <button
-                      onClick={()=> handleFriendRequestCancel(user)}
-                        className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
-                      >
-                        Cancel
-                      </button>
-                  ) : friendsInfo.includes(user.userId + userTotalInfo.uid) ||
-                    friendsInfo.includes(userTotalInfo.uid + user.userId) ? (
-                    <button className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
-                      Friend
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleFriendRequest(user)}
-                      className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
-                    >
-                      Add Request
-                    </button>
-                  )}
+          <div key={index} className="flex lg:ml-2 lg:mt-2 gap-4">
+            <div>
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-10 lg:w-20 rounded-full">
+                  <img src={profile} />
                 </div>
+              </label>
+            </div>
+
+            <div>
+              <h3 className="text-md font-pop text-lg font-semibold">
+                {user.username}
+              </h3>
+              <p className="font-pop text-sm">{user.email}</p>
+              <div className="mt-2 flex gap-2">
+                {friendRequestInfo.includes(userTotalInfo.uid + user.userId) ? (
+                  <button className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
+                    Pending
+                  </button>
+                ) : friendRequestInfo.includes(
+                    user.userId + userTotalInfo.uid
+                  ) ? (
+                  <button
+                    onClick={() => handleFriendRequestCancel(user)}
+                    className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
+                  >
+                    Cancel
+                  </button>
+                ) : friendsInfo.includes(user.userId + userTotalInfo.uid) ||
+                  friendsInfo.includes(userTotalInfo.uid + user.userId) ? (
+                  <button className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 ">
+                    Friend
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleFriendRequest(user)}
+                    className="px-4 py-2 bg-purple-400 rounded-lg text-[#DADCE1] hover:text-[#d6d9e2] hover:bg-purple-500 hover:hover:ease-in-out duration-100 "
+                  >
+                    Add Request
+                  </button>
+                )}
               </div>
             </div>
+          </div>
         ))
       ) : (
         <div className="alert alert-info">
