@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid"; // Import the uuid package
 import { useSelector } from "react-redux";
+import { MdInsertPhoto } from "react-icons/md";
 
 const ProfilePostInputBar = () => {
   // const userTotalInfo = useSelector((state) => state.userData.userInfo);
@@ -92,21 +93,37 @@ const ProfilePostInputBar = () => {
     <div className="rounded-lg">
       <div className="p-4 flex w-full gap-3 border-b">
         {/* Profile Image */}
-        <div>
-        <input
-          value={textData}
-          onChange={handleTextDataChange}
-          name="textPost"
-          type="text"
-          placeholder="What's on your mind?"
-          className="p-2 border-4 rounded-full w-full mb-4 "
-        />
-        <input onChange={handleImageChange} type="file" name="file" id="" />
-        </div>
-        <div className="">
-        <button className="btn btn-primary" onClick={handlePost}>
-          Post
-        </button>
+        <div className="flex w-full gap-5">
+          <div className="relative w-full">
+            <div>
+              <input
+                value={textData}
+                onChange={handleTextDataChange}
+                name="textPost"
+                type="text"
+                placeholder="What's on your mind?"
+                className="p-2 border-4 rounded-full w-full mb-4 "
+              />
+            </div>
+
+            <label className="">
+            <div className="absolute top-3 right-8">
+              <MdInsertPhoto className="text-2xl" />
+            </div>
+              <input
+                onChange={handleImageChange}
+                hidden
+                type="file"
+                name="file"
+                id=""
+              />
+            </label>
+          </div>
+              <div className="">
+                <button className="btn btn-primary" onClick={handlePost}>
+                  Post
+                </button>
+              </div>
         </div>
       </div>
     </div>
